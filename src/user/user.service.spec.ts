@@ -1,11 +1,10 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 
-describe(UsersService, () => {
-  let service: UsersService;
+describe(UserService, () => {
+  let service: UserService;
   const DefaultUser: CreateUserDto = {
     username: 'john',
     password: 'Test1234',
@@ -16,30 +15,30 @@ describe(UsersService, () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
+      providers: [UserService],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    service = module.get<UserService>(UserService);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  describe(UsersService.prototype.create, () => {
-    it('should success', () => {
-      const user = service.create(DefaultUser);
+  describe(UserService.prototype.create, () => {
+    it('should success', async () => {
+      const user = await service.create(DefaultUser);
 
       expect(user.id).toBeDefined();
       expect(user.firstName).toBe(DefaultUser.firstName);
     });
   });
 
-  describe(UsersService.prototype.update, () => {
-    it('should success', () => {
-      let user = service.create(DefaultUser);
+  describe(UserService.prototype.update, () => {
+    it('should success', async () => {
+      let user = await service.create(DefaultUser);
       const newFirstName = 'myNewName';
-      user = service.update(user.id, {
+      user = await service.update(user.id, {
         firstName: newFirstName,
       });
 
@@ -47,10 +46,10 @@ describe(UsersService, () => {
       expect(user.lastName).toBe(DefaultUser.lastName);
       expect(user.firstName).toBe(newFirstName);
     });
-    it('should success', () => {
-      let user = service.create(DefaultUser);
+    it('should success', async () => {
+      let user = await service.create(DefaultUser);
       const newFirstName = 'myNewName';
-      user = service.update(user.id, {
+      user = await service.update(user.id, {
         lastName: newFirstName,
       });
 
@@ -60,24 +59,24 @@ describe(UsersService, () => {
     });
   });
 
-  describe(UsersService.prototype.findAll, () => {
-    it('should be success with empty return', () => {
-      const users = service.findAll();
+  describe(UserService.prototype.findAll, () => {
+    it('should be success with empty return', async () => {
+      const users = await service.findAll();
       expect(users.length).toBe(0);
     });
 
-    it('should be success with 2 users', () => {
+    it('should be success with 2 users', async () => {
       service.create(DefaultUser);
       service.create(DefaultUser);
-      const users = service.findAll();
+      const users = await service.findAll();
       expect(users.length).toBe(2);
     });
   });
 
-  describe(UsersService.prototype.findOne, () => {
-    it('should success', () => {
-      const user = service.create(DefaultUser);
-      const userFound = service.findOne(user.id);
+  describe(UserService.prototype.findOne, () => {
+    it('should success', async () => {
+      const user = await service.create(DefaultUser);
+      const userFound = await service.findOne(user.id);
       expect(userFound.id).toBe(user.id);
     });
 
@@ -86,14 +85,14 @@ describe(UsersService, () => {
       const t = () => {
         service.findOne(wrongId);
       };
-      expect(t).toThrow(NotFoundException);
+      expect(t).rejects.toThrow(NotFoundException);
     });
   });
 
-  describe(UsersService.prototype.remove, () => {
-    it('should Success', () => {
-      const user = service.create(DefaultUser);
-      const userFound = service.findOne(user.id);
+  describe(UserService.prototype.remove, () => {
+    it('should Success', async () => {
+      const user = await service.create(DefaultUser);
+      const userFound = await service.findOne(user.id);
 
       // Make sure found user
       expect(userFound.id).toBe(user.id);
@@ -104,7 +103,7 @@ describe(UsersService, () => {
       const toThrow = () => {
         service.findOne(userFound.id);
       };
-      expect(toThrow).toThrow(NotFoundException);
+      expect(toThrow).rejects.toThrow(NotFoundException);
     });
 
     it('should Throw', () => {
@@ -112,15 +111,7 @@ describe(UsersService, () => {
       const toThrow = () => {
         service.remove(wrongId);
       };
-      expect(toThrow).toThrow(NotFoundException);
-    });
-  });
-
-  // To test a private method you can access it like service['convertToUser']
-  describe(UsersService.prototype['convertToUser'], () => {
-    it('should Success', () => {
-      const user = service['convertToUser'](DefaultUser);
-      expect(user).toBeInstanceOf(User);
+      expect(toThrow).rejects.toThrow(NotFoundException);
     });
   });
 });
