@@ -13,6 +13,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { IsUUIDParam } from '../common/decorators/is-strong-password';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
@@ -32,8 +33,8 @@ export class UserController {
   @ApiOkResponse({
     description: 'Success user created',
   })
-  create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
@@ -41,7 +42,7 @@ export class UserController {
     operationId: 'user_findAll',
     description: 'Endpoint to find all',
   })
-  findAll(): Promise<UserDto[]> {
+  async findAll(): Promise<UserDto[]> {
     return this.usersService.findAll();
   }
 
@@ -56,7 +57,10 @@ export class UserController {
   @ApiNotFoundResponse({
     description: 'Was not able to find user',
   })
-  findOne(@Param('id') id: string) {
+  async findOne(
+    @IsUUIDParam('id')
+    id: string
+  ) {
     return this.usersService.findOne(id);
   }
 
@@ -65,7 +69,10 @@ export class UserController {
     description: 'Endpoint to update user',
   })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  async update(
+    @IsUUIDParam('id') id: string,
+    @Body() updateUserDto: UpdateUserDto
+  ) {
     return this.usersService.update(id, updateUserDto);
   }
 
@@ -74,7 +81,7 @@ export class UserController {
     description: 'Endpoint to delete all',
   })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
 }

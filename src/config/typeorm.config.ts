@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { TYPEORM_MODULE_CONFIG } from '../common/constants';
 import { UserSubscriber } from '../user/user.subscriber';
 
 /*
@@ -22,7 +23,7 @@ const config = {
     - process.env.DATABASE_SYNCHRONIZE
 */
 export const typeormConfig = registerAs(
-  'TYPEORM_MODULE_CONFIG',
+  TYPEORM_MODULE_CONFIG,
   (): TypeOrmModuleOptions => {
     return {
       type: 'postgres',

@@ -7,12 +7,13 @@ import { typeormConfig } from './config/typeorm.config';
 import { UserModule } from './user/user.module';
 import { RoleModule } from './role/role.module';
 import { UserRoleModule } from './user-role/user-role.module';
+import sampleConfig from './config/sample.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeormConfig],
+      load: [typeormConfig, sampleConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [typeormConfig.KEY],

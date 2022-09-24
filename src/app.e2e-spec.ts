@@ -3,16 +3,18 @@ import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
 import { AppModule } from './app.module';
 import { CreateUserDto } from './user/dto/create-user.dto';
+import { randomUUID } from 'crypto';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   const DefaultUser: CreateUserDto = {
-    username: 'john',
+    username: `${randomUUID()}`,
     password: 'Test1234',
     firstName: 'John',
     lastName: 'Doe',
-    email: 'john@dispostable.com',
+    email: `${randomUUID()}@dispostable.com`,
   };
+  let userId: string;
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -22,17 +24,29 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('GET /Users', async () => {
-    await request(app.getHttpServer())
+  it('POST /Users', async () => {
+    const response = await request(app.getHttpServer())
       .post('/users')
       .send(DefaultUser)
       .expect(201);
 
+    userId = response.body.id;
+  });
+
+  it('GET /Users', async () => {
     return request(app.getHttpServer())
-      .get('/users')
+      .get(`/users/${userId}`)
       .expect(200)
       .then(response => {
-        expect(response.body.length).toBe(1);
+        expect(response.body.username).toBe(DefaultUser.username);
       });
+  });
+
+  it('remove /Users', async () => {
+    await request(app.getHttpServer()).delete(`/users/${userId}`).expect(200);
+  });
+
+  it('GET /Users throws 404', async () => {
+    await request(app.getHttpServer()).get(`/users/${userId}`).expect(404);
   });
 });

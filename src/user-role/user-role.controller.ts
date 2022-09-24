@@ -23,7 +23,9 @@ export class UserRoleController {
   @ApiOkResponse({
     description: 'Success userUserRole created',
   })
-  create(@Body() createUserRoleDto: CreateUserRoleDto): Promise<UserRoleDto> {
+  async create(
+    @Body() createUserRoleDto: CreateUserRoleDto
+  ): Promise<UserRoleDto> {
     return this.userUserRolesService.create(createUserRoleDto);
   }
 
@@ -32,7 +34,7 @@ export class UserRoleController {
     operationId: 'userUserRole_findAll',
     description: 'Endpoint to find all',
   })
-  findAll(): Promise<UserRoleDto[]> {
+  async findAll(): Promise<UserRoleDto[]> {
     return this.userUserRolesService.findAll();
   }
 
@@ -47,7 +49,7 @@ export class UserRoleController {
   @ApiNotFoundResponse({
     description: 'Was not able to find userUserRole',
   })
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.userUserRolesService.findOne(id);
   }
 
@@ -56,7 +58,7 @@ export class UserRoleController {
     description: 'Endpoint to delete all',
   })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.userUserRolesService.remove(id);
   }
 }

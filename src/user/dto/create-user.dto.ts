@@ -1,6 +1,9 @@
-import { UserCreatableInterface } from '../interfaces';
-import { IsEmail, IsString, IsOptional } from 'class-validator';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
+
 import { ApiProperty } from '@nestjs/swagger';
+
+import { IsStrongPassword } from '../../common/decorators/is-strong-password';
+import { UserCreatableInterface } from '../interfaces';
 
 export class CreateUserDto implements UserCreatableInterface {
   @ApiProperty({
@@ -15,6 +18,7 @@ export class CreateUserDto implements UserCreatableInterface {
     description: 'Password',
   })
   @IsString()
+  @IsStrongPassword()
   password!: string;
 
   @ApiProperty({

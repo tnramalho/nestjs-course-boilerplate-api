@@ -29,7 +29,7 @@ export class User extends CommonEntity implements UserInterface {
   active!: boolean;
 
   @OneToMany(() => UserRole, userRole => userRole.user)
-  userRoles!: UserRole[];
+  userRoles?: UserRole[];
 
   // TODO: One way to do many to many relationship
   // @ManyToMany(() => Role, (role) => role.users, {

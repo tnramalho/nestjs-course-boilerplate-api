@@ -32,7 +32,7 @@ export class RoleController {
   @ApiOkResponse({
     description: 'Success role created',
   })
-  create(@Body() createRoleDto: CreateRoleDto): Promise<RoleDto> {
+  async create(@Body() createRoleDto: CreateRoleDto): Promise<RoleDto> {
     return this.rolesService.create(createRoleDto);
   }
 
@@ -56,7 +56,7 @@ export class RoleController {
   @ApiNotFoundResponse({
     description: 'Was not able to find role',
   })
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.rolesService.findOne(id);
   }
 
@@ -65,7 +65,7 @@ export class RoleController {
     description: 'Endpoint to update role',
   })
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
+  async update(@Param('id') id: string, @Body() updateRoleDto: UpdateRoleDto) {
     return this.rolesService.update(id, updateRoleDto);
   }
 
@@ -74,7 +74,7 @@ export class RoleController {
     description: 'Endpoint to delete all',
   })
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.rolesService.remove(id);
   }
 }

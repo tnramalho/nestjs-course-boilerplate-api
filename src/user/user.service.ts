@@ -1,7 +1,11 @@
 import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,9 +21,13 @@ export class UserService {
   ) {}
 
   public async create(createUser: CreateUserDto): Promise<UserDto> {
-    const user = this.repo.create(createUser);
-    const dbUser = await this.repo.save(user);
-    return plainToInstance(UserDto, dbUser);
+    try {
+      const user = this.repo.create(createUser);
+      const dbUser = await this.repo.save(user);
+      return plainToInstance(UserDto, dbUser);
+    } catch (e) {
+      throw new InternalServerErrorException('Error trying to create a user');
+    }
   }
 
   public async findAll(): Promise<UserDto[]> {

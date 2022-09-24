@@ -20,7 +20,7 @@ export class UpdateUserDto implements UserUpdatableInterface {
   lastName?: string;
 
   @ApiProperty({
-    type: 'string',
+    type: Boolean,
     description: 'active',
   })
   @IsBoolean()
