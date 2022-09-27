@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 import { UserRoleDto } from '../../user-role/dto/user-role.dto';
 import { UserInterface } from '../interfaces';
-import { CommonEntityDto } from '../../common/dto';
+import { CommonEntityDto } from '../../../common/dto';
 
 @Exclude()
 export class UserDto

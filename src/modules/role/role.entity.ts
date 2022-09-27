@@ -1,4 +1,4 @@
-import { CommonEntity } from '../common/common.entity';
+import { CommonEntity } from '../../common/common.entity';
 import { Column, Entity, OneToMany, Unique } from 'typeorm';
 import { UserRole } from '../user-role/user-role.entity';
 

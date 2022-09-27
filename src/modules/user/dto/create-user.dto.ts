@@ -2,7 +2,7 @@ import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsStrongPassword } from '../../common/decorators/is-strong-password';
+import { IsStrongPassword } from '../../../common/decorators/is-strong-password';
 import { UserCreatableInterface } from '../interfaces';
 
 export class CreateUserDto implements UserCreatableInterface {

@@ -10,7 +10,7 @@ import { FindOperator } from 'typeorm/find-options/FindOperator';
 
 import { BadRequestException } from '@nestjs/common';
 
-import { CryptUtil } from '../common/utils/crypt.util';
+import { CryptUtil } from '../../common/utils/crypt.util';
 //import { UserRole } from '../user-role/user-role.entity';
 //import { Role } from '../role/role.entity';
 //import { AppRole } from '../../app.acl';

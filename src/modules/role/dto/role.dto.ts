@@ -1,6 +1,6 @@
 import { RoleInterface } from '../interfaces';
 import { Exclude, Expose } from 'class-transformer';
-import { CommonEntityDto } from '../../common/dto';
+import { CommonEntityDto } from '../../../common/dto';
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 

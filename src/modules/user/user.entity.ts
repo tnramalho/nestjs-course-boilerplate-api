@@ -1,6 +1,6 @@
 import { Entity, Column, Unique, OneToMany } from 'typeorm';
 import { UserInterface } from './interfaces';
-import { CommonEntity } from '../common/common.entity';
+import { CommonEntity } from '../../common/common.entity';
 import { UserRole } from '../user-role/user-role.entity';
 
 @Entity()

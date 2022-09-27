@@ -13,7 +13,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { IsUUIDParam } from '../common/decorators/is-strong-password';
+import { IsUUIDParam } from '../../common/decorators/is-strong-password';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
