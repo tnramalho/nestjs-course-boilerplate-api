@@ -12,6 +12,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
+import { CryptUtil } from '../../common/utils/crypt.util';
 
 @Injectable()
 export class UserService {
@@ -71,5 +72,34 @@ export class UserService {
   public async remove(id: string): Promise<void> {
     const user = await this.findById(id);
     await this.repo.remove(user);
+  }
+
+  /**
+   * Get user based on username or email and validate password
+   *
+   * @param AuthCredentialsDto
+   * @return User if password is valid
+   * @return null if password is not valid
+   */
+  async validateUserPassword(
+    username: string,
+    password: string
+  ): Promise<UserDto | null> {
+    // get the username
+    const user = await this.repo.findOne({
+      where: {
+        username,
+      },
+    });
+
+    // if user exists and has a valid password
+    if (
+      user &&
+      (await CryptUtil.validatePassword(password, user.password, user.salt))
+    ) {
+      return plainToInstance(UserDto, user);
+    } else {
+      return null;
+    }
   }
 }

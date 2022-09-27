@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { RoleModule } from './modules/role/role.module';
 import { UserRoleModule } from './modules/user-role/user-role.module';
 import sampleConfig from './config/sample.config';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import sampleConfig from './config/sample.config';
     UserModule,
     RoleModule,
     UserRoleModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

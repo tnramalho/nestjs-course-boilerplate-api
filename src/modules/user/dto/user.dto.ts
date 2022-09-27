@@ -9,10 +9,12 @@ import { CommonEntityDto } from '../../../common/dto';
 @Exclude()
 export class UserDto
   extends CommonEntityDto
-  implements Omit<UserInterface, 'salt' | 'password'>
+  implements Omit<UserInterface, 'salt'>
 {
   @Expose()
   username!: string;
+
+  password!: string;
 
   @Expose()
   firstName!: string;
