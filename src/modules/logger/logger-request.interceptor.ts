@@ -33,32 +33,54 @@ export class LoggerRequestInterceptor<T>
     this.loggerService.log(message);
 
     return _next.handle().pipe(
-      tap(() => {
-        // format the response message
-        const message = this.loggerService.formatResponseMessage(
-          req,
-          res,
-          startDate
-        );
-        // log the response
-        this.loggerService.log(message);
-      }),
+      tap(() => this.responseSuccess(req, res, startDate)),
       // catch all errors
-      catchError((error: Error) => {
-        // format the message
-        const message = this.loggerService.formatResponseMessage(
-          req,
-          res,
-          startDate,
-          error
-        );
-
-        // log as an exception
-        this.loggerService.exception(error, message);
-
-        // all done, re-throw original error
-        return throwError(() => error);
-      })
+      catchError((error: Error) =>
+        this.responseError(req, res, startDate, error),
+      ),
     );
+  }
+
+  /**
+   * Method to log response success
+   *
+   * @param req Request
+   * @param res Response
+   * @param startDate the date for the message
+   */
+  responseSuccess(req: Request, res: Response, startDate: Date) {
+    // format the response message
+    const message = this.loggerService.formatResponseMessage(
+      req,
+      res,
+      startDate,
+    );
+    // log the response
+    this.loggerService.log(message);
+  }
+
+  /**
+   * Format exception error
+   *
+   * @param req
+   * @param res
+   * @param startDate
+   * @param error
+   * @returns
+   */
+  responseError(req: Request, res: Response, startDate: Date, error: Error) {
+    // format the message
+    const message = this.loggerService.formatResponseMessage(
+      req,
+      res,
+      startDate,
+      error,
+    );
+
+    // log as an exception
+    this.loggerService.exception(error, message);
+
+    // all done, re-throw original error
+    return throwError(() => error);
   }
 }

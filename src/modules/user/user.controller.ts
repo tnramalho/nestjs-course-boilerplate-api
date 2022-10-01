@@ -30,7 +30,7 @@ import { UserService } from './user.service';
 @ApiTags('Users')
 @Controller('users')
 @ApiBearerAuth()
-@UseGuards(RolesGuard)
+//@UseGuards(RolesGuard)
 @UseGuards(JwtAuthGuard)
 @Roles(RoleEnum.Admin)
 export class UserController {

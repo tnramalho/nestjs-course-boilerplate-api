@@ -1,11 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import { Repository } from 'typeorm';
 
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,6 +10,7 @@ import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { CryptUtil } from '../../common/utils/crypt.util';
 import { LoggerService } from '../logger/logger.service';
+import { UserNotFoundException } from './exceptions/user-not-found.exception';
 
 @Injectable()
 export class UserService {
@@ -49,7 +46,7 @@ export class UserService {
       where: { id },
       relations: ['userRoles.role'],
     });
-    if (!user) throw new NotFoundException();
+    if (!user) throw new UserNotFoundException();
     return user;
   }
 
@@ -60,7 +57,7 @@ export class UserService {
 
   public async update(
     id: string,
-    updateUserDto: UpdateUserDto
+    updateUserDto: UpdateUserDto,
   ): Promise<UserDto> {
     const user = await this.findById(id);
     const newUser: User = {
