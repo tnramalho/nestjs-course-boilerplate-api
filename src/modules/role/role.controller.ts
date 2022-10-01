@@ -6,8 +6,10 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -18,9 +20,17 @@ import { UpdateRoleDto } from './dto/update-role.dto';
 import { RoleDto } from './dto/role.dto';
 
 import { RoleService } from './role.service';
+import { RolesGuard } from './guards/roles.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
+import { RoleEnum } from './enum/role.enum';
+import { Roles } from './decorator/roles.decorator';
 
 @ApiTags('Roles')
 @Controller('roles')
+@ApiBearerAuth()
+@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard)
+@Roles(RoleEnum.Admin)
 export class RoleController {
   constructor(private readonly rolesService: RoleService) {}
 

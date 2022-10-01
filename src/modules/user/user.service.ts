@@ -33,20 +33,17 @@ export class UserService {
 
   public async findAll(): Promise<UserDto[]> {
     const users = await this.repo.find({
-      relations: ['userRoles'],
+      relations: ['userRoles.role'],
     });
     return plainToInstance(UserDto, users);
   }
 
   private async findById(id: string): Promise<User> {
     // Get without relationships
-    const user = await this.repo.findOneBy({
-      id,
+    const user = await this.repo.findOne({
+      where: { id },
+      relations: ['userRoles.role'],
     });
-    // const user = await this.repo.findOne({
-    //   where: { id },
-    //   relations: ['roles'],
-    // });
     if (!user) throw new NotFoundException();
     return user;
   }

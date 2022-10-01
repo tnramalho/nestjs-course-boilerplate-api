@@ -6,22 +6,31 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import {
+  ApiBearerAuth,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
 import { IsUUIDParam } from '../../common/decorators/is-strong-password';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
+import { Roles } from '../role/decorator/roles.decorator';
+import { RoleEnum } from '../role/enum/role.enum';
+import { RolesGuard } from '../role/guards/roles.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
-
 import { UserService } from './user.service';
 
 @ApiTags('Users')
 @Controller('users')
+@ApiBearerAuth()
+@UseGuards(RolesGuard)
+@UseGuards(JwtAuthGuard)
+@Roles(RoleEnum.Admin)
 export class UserController {
   constructor(private readonly usersService: UserService) {}
 

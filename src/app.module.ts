@@ -9,12 +9,13 @@ import { RoleModule } from './modules/role/role.module';
 import { UserRoleModule } from './modules/user-role/user-role.module';
 import sampleConfig from './config/sample.config';
 import { AuthModule } from './modules/auth/auth.module';
+import { jwtConfig } from './config/jwt.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeormConfig, sampleConfig],
+      load: [typeormConfig, jwtConfig, sampleConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [typeormConfig.KEY],
