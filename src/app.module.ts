@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -12,6 +12,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { jwtConfig } from './config/jwt.config';
 import { loggerConfig } from './config/logger.config';
 import { loggerSentryConfig } from './config/logger-sentry.config';
+import { NestModule } from '@nestjs/common';
+import { ApiKeyMiddleware } from './modules/auth/midleware/api-key.middleware';
+import { LoggerModule } from './modules/logger/logger.module';
 
 @Module({
   imports: [
@@ -33,8 +36,17 @@ import { loggerSentryConfig } from './config/logger-sentry.config';
     RoleModule,
     UserRoleModule,
     AuthModule,
+    LoggerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(ApiKeyMiddleware)
+      .exclude('(.*)')
+      //.exclude('auth/(.*)')
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}

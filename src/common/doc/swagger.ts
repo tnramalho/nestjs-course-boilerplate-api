@@ -1,5 +1,6 @@
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
+import { API_KEY_HEADER } from '../constants';
 
 export async function swagger(app: INestApplication, environment: string) {
   if (environment !== 'development') {

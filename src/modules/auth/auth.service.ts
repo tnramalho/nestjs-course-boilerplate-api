@@ -14,7 +14,7 @@ export class AuthService {
     private userService: UserService,
     private jwtService: JwtService,
     @Inject(jwtConfig.KEY)
-    private config: ConfigType<typeof jwtConfig>
+    private config: ConfigType<typeof jwtConfig>,
   ) {}
 
   async validateUser(
@@ -23,7 +23,7 @@ export class AuthService {
   ): Promise<UserDto | null> {
     const user = await this.userService.validateUserPassword(
       username,
-      password
+      password,
     );
     if (!user || !user.active) null;
     return user;
@@ -37,12 +37,12 @@ export class AuthService {
 
     const accessToken = await this.jwtService.sign(
       payload,
-      accessConfig?.signOptions
+      accessConfig?.signOptions,
     );
 
     const refreshToken = await this.jwtService.sign(
       payload,
-      refreshConfig?.signOptions
+      refreshConfig?.signOptions,
     );
 
     return new AuthResponseDto(accessToken, refreshToken);
@@ -53,7 +53,7 @@ export class AuthService {
 
     const verified = await this.jwtService.verifyAsync<JwtPayload>(
       authRefreshDto.refreshToken,
-      refreshConfig?.verifyOptions
+      refreshConfig?.verifyOptions,
     );
 
     if (verified) {

@@ -18,7 +18,7 @@ export class LoggerExceptionFilter extends BaseExceptionFilter {
     this.loggerService.exception(
       exception,
       undefined,
-      LoggerExceptionFilter.name
+      LoggerExceptionFilter.name,
     );
     super.catch(exception, host);
   }

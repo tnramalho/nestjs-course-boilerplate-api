@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { LoggerService } from './logger.service';
 import { LoggerTransportService } from './logger-transport.service';
@@ -9,6 +9,7 @@ import { LoggerSentryTransport } from './transports/logger-sentry.transport';
 import { loggerConfig } from '../../config/logger.config';
 import { loggerSentryConfig } from '../../config/logger-sentry.config';
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forFeature(loggerConfig),

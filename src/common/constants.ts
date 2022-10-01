@@ -1,3 +1,4 @@
 export const SERVER_CONFIG = 'SERVER_CONFIG';
 export const TYPEORM_MODULE_CONFIG = 'TYPEORM_MODULE_CONFIG';
 export const JWT_MODULE_CONFIG = 'JWT_MODULE_CONFIG';
+export const API_KEY_HEADER = 'api_key';

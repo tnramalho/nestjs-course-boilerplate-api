@@ -17,7 +17,7 @@ export class LoggerRequestInterceptor<T>
 
   intercept(
     _context: ExecutionContext,
-    _next: CallHandler
+    _next: CallHandler,
   ): Observable<Response<T>> {
     const req: Request = _context.switchToHttp().getRequest();
     const res: Response = _context.switchToHttp().getResponse();

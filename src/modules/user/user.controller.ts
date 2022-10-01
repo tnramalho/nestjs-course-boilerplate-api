@@ -10,11 +10,13 @@ import {
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
+  ApiHeaders,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { API_KEY_HEADER } from '../../common/constants';
 import { IsUUIDParam } from '../../common/decorators/is-strong-password';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
 import { Roles } from '../role/decorator/roles.decorator';
