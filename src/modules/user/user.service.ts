@@ -13,13 +13,18 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { User } from './user.entity';
 import { CryptUtil } from '../../common/utils/crypt.util';
+import { LoggerService } from '../logger/logger.service';
 
 @Injectable()
 export class UserService {
+  private context: string;
   constructor(
     @InjectRepository(User)
-    private repo: Repository<User>
-  ) {}
+    private repo: Repository<User>,
+    private loggerService: LoggerService
+  ) {
+    this.context = this.constructor.name;
+  }
 
   public async create(createUser: CreateUserDto): Promise<UserDto> {
     try {
@@ -96,6 +101,10 @@ export class UserService {
     ) {
       return plainToInstance(UserDto, user);
     } else {
+      this.loggerService.debug(
+        `Password was not valid for user ${user?.username}`,
+        this.context
+      );
       return null;
     }
   }

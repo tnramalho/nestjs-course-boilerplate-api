@@ -10,12 +10,20 @@ import { UserRoleModule } from './modules/user-role/user-role.module';
 import sampleConfig from './config/sample.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { jwtConfig } from './config/jwt.config';
+import { loggerConfig } from './config/logger.config';
+import { loggerSentryConfig } from './config/logger-sentry.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeormConfig, jwtConfig, sampleConfig],
+      load: [
+        typeormConfig,
+        jwtConfig,
+        loggerConfig,
+        loggerSentryConfig,
+        sampleConfig,
+      ],
     }),
     TypeOrmModule.forRootAsync({
       inject: [typeormConfig.KEY],
