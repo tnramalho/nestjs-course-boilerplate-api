@@ -21,6 +21,8 @@ import { UserRoleModule } from './modules/user-role/user-role.module';
 import { UserModule } from './modules/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
+import { EmailModule } from './modules/email/email.module';
+import { emailConfig } from './config/email.config';
 
 @Module({
   imports: [
@@ -35,6 +37,7 @@ import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
         jwtConfig,
         loggerConfig,
         loggerSentryConfig,
+        emailConfig,
         sampleConfig,
       ],
     }),
@@ -48,6 +51,7 @@ import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
     AuthModule,
     LoggerModule,
     UploadModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
