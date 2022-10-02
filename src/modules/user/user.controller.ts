@@ -7,9 +7,13 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
+  ApiConsumes,
   ApiHeaders,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -17,6 +21,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { API_KEY_HEADER } from '../../common/constants';
+import { ApiFileDecorator } from '../../common/decorators/api-file-decorator';
 import { IsUUIDParam } from '../../common/decorators/is-strong-password';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
 import { Roles } from '../role/decorator/roles.decorator';
@@ -31,7 +36,7 @@ import { UserService } from './user.service';
 @Controller('users')
 @ApiBearerAuth()
 //@UseGuards(RolesGuard)
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 @Roles(RoleEnum.Admin)
 export class UserController {
   constructor(private readonly usersService: UserService) {}

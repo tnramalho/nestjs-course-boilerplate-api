@@ -12,7 +12,8 @@
     "allowSyntheticDefaultImports": true,
     "incremental": false,
     "composite": false,
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["./node_modules/@types"],
+    "importHelpers": true,
   },
   "exclude": ["node_modules", "dist", "sdk"]
 }
