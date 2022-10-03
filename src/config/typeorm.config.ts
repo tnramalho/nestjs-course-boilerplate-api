@@ -39,7 +39,7 @@ export const typeormConfig = registerAs(
       synchronize:
         'string' === typeof process.env.DATABASE_SYNCHRONIZE
           ? process.env.DATABASE_SYNCHRONIZE === 'true'
-          : true,
+          : false,
       migrations: [__dirname + '/../migrations/*.{js,ts}'],
       autoLoadEntities: true,
       logging: true,
