@@ -5,6 +5,7 @@ import {
   Post,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -14,6 +15,7 @@ import { Response } from 'express';
 import { UPLOAD_PATH } from '../../common/constants';
 import { ApiFileDecorator } from '../../common/decorators/api-file-decorator';
 import { imageFileFilter } from '../../common/utils/file-utils';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
 import { FileResponseDto } from './dto/file-response.dto';
 
 @ApiTags('Upload')
