@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { UPLOAD_URL } from '../../../common/constants';
 import { serverConfig } from '../../../config/server.config';
 
 @Exclude()

@@ -16,5 +16,6 @@ import { emailConfig } from '../../config/email.config';
   ],
   providers: [EmailService],
   controllers: [EmailController],
+  exports: [EmailService],
 })
 export class EmailModule {}

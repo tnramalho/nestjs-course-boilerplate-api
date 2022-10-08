@@ -19,10 +19,12 @@ export class ErrorCodeExceptionFilter extends BaseExceptionFilter {
     const response = ctx.getResponse<Response>();
     const status = exception?.getStatus ? exception?.getStatus() : 500;
 
+    const errorMessage = exception['response'].message ?? exception?.message;
+
     response.status(status).json({
       errorCode: exception?.errorCode,
       statusCode: status,
-      message: exception?.message,
+      message: errorMessage,
       timestamp: new Date().toISOString(),
     });
     //super.catch(exception, host);

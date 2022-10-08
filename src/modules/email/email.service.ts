@@ -1,6 +1,9 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Exception } from '@sentry/types';
+import { LoggerService } from '../logger/logger.service';
 import { TEMPLATE_RESET_PASSWORD, TEMPLATE_TEST } from './constants';
+import { EmailOptions } from './interfaces/email-options.interface';
 
 // class EmailDto {
 //   to!: string;
@@ -13,22 +16,31 @@ import { TEMPLATE_RESET_PASSWORD, TEMPLATE_TEST } from './constants';
 
 @Injectable()
 export class EmailService {
-  constructor(private readonly mailerService: MailerService) { }
+  constructor(
+    private readonly mailerService: MailerService,
+    private readonly loggerService: LoggerService
+  ) {}
 
-  // // TODO: Implement if has time
-  // async sendResetPasswordEmail(dto: ResetPasswordDto) {
-  //   return await this.mailerService.sendMail({
-  //     to: dto.to, // list of receivers
-  //     template: TEMPLATE_RESET_PASSWORD,
-  //     context: {
-  //       tokenUrl: `${dto.resetToken}`,
-  //       tokenExp:
-  //         dto?.expirationDate instanceof Date
-  //           ? dto.expirationDate.toUTCString()
-  //           : '',
-  //     },
-  //   });
-  // }
+  /**
+   * logic to send email based on options
+   *
+   * @param emailOptions
+   */
+  async send(emailOptions: EmailOptions) {
+    try {
+      const result = await this.mailerService.sendMail({
+        from: 'noreply@gmail.com',
+        ...emailOptions,
+      });
+      console.log(result);
+      return result;
+    } catch (e: any) {
+      this.loggerService.error(e?.message, EmailService.name);
+      throw new InternalServerErrorException(
+        'Fatal error while trying to send email.'
+      );
+    }
+  }
 
   async sendTestEmail() {
     return await this.mailerService.sendMail({
@@ -41,7 +53,7 @@ export class EmailService {
   }
 
   async sendEmailWithTemplate(to: string, firstName: string) {
-    return await this.mailerService.sendMail({
+    return await this.send({
       to: to, // list of receivers
       template: TEMPLATE_TEST,
       context: {

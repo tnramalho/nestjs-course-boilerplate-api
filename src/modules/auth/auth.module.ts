@@ -3,6 +3,7 @@ import { ConfigType } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { jwtConfig } from '../../config/jwt.config';
+import { EmailModule } from '../email/email.module';
 import { LoggerModule } from '../logger/logger.module';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
@@ -16,6 +17,7 @@ import { ApiKeyMiddleware } from './midleware/api-key.middleware';
   imports: [
     forwardRef(() => UserModule),
     PassportModule,
+    EmailModule,
     JwtModule.registerAsync({
       inject: [jwtConfig.KEY],
       useFactory: async (config: ConfigType<typeof jwtConfig>) => config,

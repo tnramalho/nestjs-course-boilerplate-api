@@ -22,7 +22,8 @@ import {
 @Exclude()
 export class UserDto
   extends CommonEntityDto
-  implements Omit<UserInterface, 'salt' | 'password'>
+  implements
+    Omit<UserInterface, 'salt' | 'password' | 'resetToken' | 'resetTokenExp'>
 {
   @ApiProperty({
     title: 'Username',
@@ -93,4 +94,9 @@ export class UserDto
     });
   })
   userRoles!: UserRoleDto[];
+
+  @Expose()
+  resetToken!: string;
+  @Expose()
+  resetTokenExp!: Date;
 }

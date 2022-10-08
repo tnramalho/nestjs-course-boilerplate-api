@@ -1,6 +1,6 @@
 import { HttpStatus, Param, ParseUUIDPipe } from '@nestjs/common';
 
-export function IsUUIDParam(property: string): ParameterDecorator {
+export function UUIDParam(property: string): ParameterDecorator {
   return Param(
     property,
     new ParseUUIDPipe({

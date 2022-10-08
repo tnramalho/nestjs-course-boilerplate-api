@@ -6,13 +6,13 @@ export const emailConfig = registerAs(
   'APP_EMAIL_MODULE_CONFIG',
   (): MailerOptions => ({
     transport: {
-      host: process.env?.MAILGUN_SMTP_SERVER ?? 'smtp.mailgun.org',
-      port: process.env?.MAILGUN_SMTP_PORT
-        ? Number(process.env?.MAILGUN_SMTP_PORT)
+      host: process.env?.EMAIL_SMTP_SERVER ?? 'smtp.mailgun.org',
+      port: process.env?.EMAIL_SMTP_PORT
+        ? Number(process.env?.EMAIL_SMTP_PORT)
         : 587,
       auth: {
-        user: process.env?.MAILGUN_SMTP_LOGIN ?? '',
-        pass: process.env?.MAILGUN_SMTP_PASSWORD ?? '',
+        user: process.env?.EMAIL_SMTP_LOGIN ?? '',
+        pass: process.env?.EMAIL_SMTP_PASSWORD ?? '',
       },
     },
     defaults: {

@@ -23,6 +23,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
 import { EmailModule } from './modules/email/email.module';
 import { emailConfig } from './config/email.config';
+import { authConfig } from './config/auth.config';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { emailConfig } from './config/email.config';
         loggerConfig,
         loggerSentryConfig,
         emailConfig,
+        authConfig,
         sampleConfig,
       ],
     }),

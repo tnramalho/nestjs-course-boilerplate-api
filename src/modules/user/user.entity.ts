@@ -28,13 +28,12 @@ export class User extends CommonEntity implements UserInterface {
   @Column({ default: true, nullable: false })
   active!: boolean;
 
+  @Column({ type: 'uuid', nullable: true })
+  resetToken!: string | null;
+
+  @Column({ type: 'timestamp', nullable: true })
+  resetTokenExp!: Date | null;
+
   @OneToMany(() => UserRole, userRole => userRole.user)
   userRoles?: UserRole[];
-
-  // TODO: One way to do many to many relationship
-  // @ManyToMany(() => Role, (role) => role.users, {
-  //   cascade: true,
-  // })
-  // @JoinTable()
-  // roles!: Role[];
 }

@@ -24,6 +24,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
 
   async beforeInsert(event: InsertEvent<User>) {
     await this._checkEmailUniqueness(event);
+    await this._checkUsernameUniqueness(event);
     await this._hashInsertedPassword(event);
   }
 
@@ -33,6 +34,7 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
 
   async beforeUpdate(event: UpdateEvent<User>) {
     await this._checkEmailUniqueness(event);
+    await this._checkUsernameUniqueness(event);
     await this._hashUpdatedPassword(event);
   }
 
@@ -104,6 +106,40 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
       // if any found, a foreign key violation would occur
       if (count > 0) {
         throw new BadRequestException('Email address already exists.');
+      } else {
+        return;
+      }
+    } else {
+      return;
+    }
+  }
+
+  async _checkUsernameUniqueness(event: InsertEvent<User> | UpdateEvent<User>) {
+    // user being inserted
+    const user = event.entity;
+
+    // does user have email set?
+    if (user?.username) {
+      // build the criteria
+      const criteria: {
+        where: {
+          id?: FindOperator<string>;
+          username: FindOperator<string>;
+        };
+      } = {
+        where: {
+          username: Equal(user.username),
+        },
+      };
+      // if user exists, skip own id
+      if (user.id) {
+        criteria.where.id = Not(user.id);
+      }
+      // query for count of users with exact e-mail address
+      const count = await event.manager.count(User, criteria);
+      // if any found, a foreign key violation would occur
+      if (count > 0) {
+        throw new BadRequestException('Username already exists.');
       } else {
         return;
       }
