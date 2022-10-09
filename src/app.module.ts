@@ -1,6 +1,12 @@
 import { join } from 'path';
 
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  CacheModule,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -24,7 +30,6 @@ import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
 import { EmailModule } from './modules/email/email.module';
 import { emailConfig } from './config/email.config';
 import { authConfig } from './config/auth.config';
-
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -46,6 +51,9 @@ import { authConfig } from './config/auth.config';
     TypeOrmModule.forRootAsync({
       inject: [typeormConfig.KEY],
       useFactory: async (config: ConfigType<typeof typeormConfig>) => config,
+    }),
+    CacheModule.register({
+      isGlobal: true,
     }),
     UserModule,
     RoleModule,

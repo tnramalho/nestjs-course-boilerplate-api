@@ -6,27 +6,21 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards,
-  UseInterceptors,
-  UploadedFile,
+  Inject,
+  CACHE_MANAGER,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
-  ApiConsumes,
-  ApiHeaders,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { API_KEY_HEADER } from '../../common/constants';
-import { ApiFileDecorator } from '../../common/decorators/api-file-decorator';
+import { Cache } from 'cache-manager';
 import { IsUUIDParam } from '../../common/decorators/is-strong-password';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
 import { Roles } from '../role/decorator/roles.decorator';
 import { RoleEnum } from '../role/enum/role.enum';
-import { RolesGuard } from '../role/guards/roles.guard';
+import { USER_REPORT_CACHE_KEY } from './constant/user.constants';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
@@ -39,7 +33,14 @@ import { UserService } from './user.service';
 //@UseGuards(JwtAuthGuard)
 @Roles(RoleEnum.Admin)
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
+  constructor(
+    private readonly usersService: UserService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
+  ) {}
+
+  private async updateReportCache() {
+    this.cacheManager.set(USER_REPORT_CACHE_KEY, await this.findAll());
+  }
 
   @Post()
   @ApiOperation({
@@ -50,7 +51,9 @@ export class UserController {
     description: 'Success user created',
   })
   async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
-    return await this.usersService.create(createUserDto);
+    const user = await this.usersService.create(createUserDto);
+    this.updateReportCache();
+    return user;
   }
 
   @Get()
@@ -89,7 +92,9 @@ export class UserController {
     @IsUUIDParam('id') id: string,
     @Body() updateUserDto: UpdateUserDto
   ) {
-    return this.usersService.update(id, updateUserDto);
+    const user = await this.usersService.update(id, updateUserDto);
+    this.updateReportCache();
+    return user;
   }
 
   @ApiOperation({
@@ -98,6 +103,7 @@ export class UserController {
   })
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+    await this.usersService.remove(id);
+    this.updateReportCache();
   }
 }

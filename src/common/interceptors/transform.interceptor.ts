@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
 interface Response<T> {
   statusCode: string;
   data: T;
+  length?: number;
 }
 
 @Injectable()
@@ -21,10 +22,15 @@ export class TransformInterceptor<T>
     next: CallHandler,
   ): Observable<Response<T>> {
     return next.handle().pipe(
-      map((data) => ({
-        statusCode: context.switchToHttp().getResponse().statusCode,
-        data,
-      })),
+      map(data => {
+        const length = Array.isArray(data) ? { length: data.length } : null;
+
+        return {
+          statusCode: context.switchToHttp().getResponse().statusCode,
+          ...length,
+          data,
+        };
+      })
     );
   }
 }
