@@ -4,7 +4,6 @@ import { IsString } from 'class-validator';
 
 @Exclude()
 export class EmailDto {
-
   @ApiProperty()
   @Expose()
   @IsString()

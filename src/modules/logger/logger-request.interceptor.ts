@@ -17,7 +17,7 @@ export class LoggerRequestInterceptor<T>
 
   intercept(
     _context: ExecutionContext,
-    _next: CallHandler,
+    _next: CallHandler
   ): Observable<Response<T>> {
     const req: Request = _context.switchToHttp().getRequest();
     const res: Response = _context.switchToHttp().getResponse();
@@ -36,8 +36,8 @@ export class LoggerRequestInterceptor<T>
       tap(() => this.responseSuccess(req, res, startDate)),
       // catch all errors
       catchError((error: Error) =>
-        this.responseError(req, res, startDate, error),
-      ),
+        this.responseError(req, res, startDate, error)
+      )
     );
   }
 
@@ -53,7 +53,7 @@ export class LoggerRequestInterceptor<T>
     const message = this.loggerService.formatResponseMessage(
       req,
       res,
-      startDate,
+      startDate
     );
     // log the response
     this.loggerService.log(message);
@@ -74,7 +74,7 @@ export class LoggerRequestInterceptor<T>
       req,
       res,
       startDate,
-      error,
+      error
     );
 
     // log as an exception

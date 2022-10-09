@@ -89,7 +89,7 @@ export class LoggerService extends ConsoleLogger {
     req: Request,
     res: Response,
     startDate: Date,
-    error?: Error,
+    error?: Error
   ): string {
     const { method, url } = req;
     const now = new Date();

@@ -1,8 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
-import { HttpException, Injectable, InternalServerErrorException } from '@nestjs/common';
-import { Exception } from '@sentry/types';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { LoggerService } from '../logger/logger.service';
-import { TEMPLATE_RESET_PASSWORD, TEMPLATE_TEST } from './constants';
+import { TEMPLATE_TEST } from './constants';
 import { EmailOptions } from './interfaces/email-options.interface';
 
 // class EmailDto {

@@ -5,7 +5,7 @@ export const ApiFileDecorator =
   (
     target: object,
     propertyKey: string | symbol,
-    descriptor: PropertyDescriptor,
+    descriptor: PropertyDescriptor
   ) => {
     ApiBody({
       schema: {

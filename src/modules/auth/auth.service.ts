@@ -1,10 +1,14 @@
-import { Inject, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { EMAIL_TEMPLATE_RESET_PASSWORD } from '../../common/constants';
 import { authConfig } from '../../config/auth.config';
 import { jwtConfig } from '../../config/jwt.config';
-import { serverConfig } from '../../config/server.config';
 import { EmailService } from '../email/email.service';
 import { EmailOptions } from '../email/interfaces/email-options.interface';
 import { LoggerService } from '../logger/logger.service';
@@ -37,7 +41,7 @@ export class AuthService {
   ): Promise<UserDto | null> {
     const user = await this.userService.validateUserPassword(
       username,
-      password,
+      password
     );
     if (!user || !user.active) null;
     return user;
@@ -51,12 +55,12 @@ export class AuthService {
 
     const accessToken = await this.jwtService.sign(
       payload,
-      accessConfig?.signOptions,
+      accessConfig?.signOptions
     );
 
     const refreshToken = await this.jwtService.sign(
       payload,
-      refreshConfig?.signOptions,
+      refreshConfig?.signOptions
     );
 
     return new AuthResponseDto(accessToken, refreshToken);
@@ -67,7 +71,7 @@ export class AuthService {
 
     const verified = await this.jwtService.verifyAsync<JwtPayload>(
       authRefreshDto.refreshToken,
-      refreshConfig?.verifyOptions,
+      refreshConfig?.verifyOptions
     );
 
     if (verified) {

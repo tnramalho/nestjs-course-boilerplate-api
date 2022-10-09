@@ -21,5 +21,5 @@ export const loggerSentryConfig = registerAs(
           return 'info';
       }
     },
-  }),
+  })
 );
