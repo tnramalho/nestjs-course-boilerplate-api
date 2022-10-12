@@ -3,6 +3,6 @@ import { UserSeeder } from '../modules/user/user.seeder';
 import dataSource from './typeorm-migration.config';
 
 export default new SeedingSource({
-  dataSource, // overridden if provided by CLI arg
+  dataSource,
   seeders: [UserSeeder],
 });
