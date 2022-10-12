@@ -19,15 +19,17 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "yarn build && typeorm -d ./dist/config/typeorm.config-migrations.js",
+    "typeorm": "yarn build && typeorm -d ./dist/config/typeorm-migration.config.js",
     "schema:drop": "yarn typeorm schema:drop",
     "schema:sync": "yarn typeorm schema:sync",
     "schema:rebuild": "yarn schema:drop && yarn schema:sync",
-    "migration:create": "yarn typeorm migration:create",
     "migration:generate": "yarn typeorm migration:generate",
     "migration:run": "yarn typeorm migration:run",
     "migration:revert": "yarn typeorm migration:revert",
-    "migration:rebuild": "yarn schema:drop && yarn migration:run"
+    "migration:rebuild": "yarn schema:drop && yarn migration:run",
+    "seed:config": "typeorm-seeding config -c ./dist/config/typeorm-seeding.config.js",
+    "seed:run": "typeorm-seeding seed -c ./dist/config/typeorm-seeding.config.js",
+    "seed:rebuild": "yarn migration:rebuild && yarn seed:run"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
@@ -59,6 +61,8 @@
     "typeorm": "^0.3.9"
   },
   "devDependencies": {
+    "@concepta/typeorm-seeding": "^4.0.0-beta.0",
+    "@faker-js/faker": "^7.5.0",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
@@ -109,7 +113,6 @@
     "testEnvironment": "node"
   },
   "files": [
-    "ormconfig.js",
     "package.json",
     "README.md",
     "yarn.lock"

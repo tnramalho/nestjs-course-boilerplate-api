@@ -1,7 +1,11 @@
 import { plainToInstance } from 'class-transformer';
 import { MoreThanOrEqual, Repository } from 'typeorm';
 
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -54,7 +58,7 @@ export class UserService {
 
   public async update(
     id: string,
-    updateUserDto: UpdateUserDto,
+    updateUserDto: UpdateUserDto
   ): Promise<UserDto> {
     const user = await this.findById(id);
     const newUser: User = {
