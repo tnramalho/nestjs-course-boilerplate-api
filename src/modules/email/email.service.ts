@@ -1,22 +1,18 @@
-import { MailerService } from '@nestjs-modules/mailer';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { LoggerService } from '../logger/logger.service';
-import { TEMPLATE_TEST } from './constants';
-import { EmailOptions } from './interfaces/email-options.interface';
-
-// class EmailDto {
-//   to!: string;
-// }
-
-// class ResetPasswordDto extends EmailDto {
-//   resetToken!: string;
-//   expirationDate!: Date;
-// }
+import { SEND_EMAIL_TOKEN, TEMPLATE_TEST } from './constants';
+import { EmailOptionsInterface } from './interfaces/email-options.interface';
+import { SendEmailServiceInterface } from './interfaces/send-email-service.interface';
 
 @Injectable()
 export class EmailService {
   constructor(
-    private readonly mailerService: MailerService,
+    @Inject(SEND_EMAIL_TOKEN)
+    private readonly sendEmailService: SendEmailServiceInterface,
     private readonly loggerService: LoggerService
   ) {}
 
@@ -25,9 +21,9 @@ export class EmailService {
    *
    * @param emailOptions
    */
-  async send(emailOptions: EmailOptions) {
+  async send(emailOptions: EmailOptionsInterface) {
     try {
-      const result = await this.mailerService.sendMail({
+      const result = await this.sendEmailService.send({
         from: 'noreply@gmail.com',
         ...emailOptions,
       });
@@ -42,7 +38,7 @@ export class EmailService {
   }
 
   async sendTestEmail() {
-    return await this.mailerService.sendMail({
+    return await this.send({
       to: 'nestjs-devpro-course@dispostable.com', // list of receivers
       from: 'noreply@dispostable.com', // sender address
       subject: 'Testing Nest MailerModule ✔', // Subject line

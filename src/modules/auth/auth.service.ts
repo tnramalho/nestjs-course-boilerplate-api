@@ -10,7 +10,7 @@ import { EMAIL_TEMPLATE_RESET_PASSWORD } from '../../common/constants';
 import { authConfig } from '../../config/auth.config';
 import { jwtConfig } from '../../config/jwt.config';
 import { EmailService } from '../email/email.service';
-import { EmailOptions } from '../email/interfaces/email-options.interface';
+import { EmailOptionsInterface } from '../email/interfaces/email-options.interface';
 import { LoggerService } from '../logger/logger.service';
 import { UserDto } from '../user/dto/user.dto';
 import { User } from '../user/user.entity';
@@ -98,7 +98,7 @@ export class AuthService {
     const template = EMAIL_TEMPLATE_RESET_PASSWORD;
 
     // build the object with data information to be populated in the email template
-    const emailOptions: EmailOptions = {
+    const emailOptions: EmailOptionsInterface = {
       to: user.email,
       subject: 'Reset Password',
       template: template,

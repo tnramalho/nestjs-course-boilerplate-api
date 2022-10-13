@@ -1,21 +1,26 @@
-import { Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { EmailService } from './email.service';
 import { EmailController } from './email.controller';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { ConfigType } from '@nestjs/config';
-import { emailConfig } from '../../config/email.config';
+import { EmailModuleOptionsInterface } from './interfaces/email-module-options.interface';
+import { SEND_EMAIL_TOKEN } from './constants';
 ///
-@Module({
-  imports: [
-    MailerModule.forRootAsync({
-      inject: [emailConfig.KEY],
-      useFactory: async (config: ConfigType<typeof emailConfig>) => {
-        return config;
-      },
-    }),
-  ],
-  providers: [EmailService],
-  controllers: [EmailController],
-  exports: [EmailService],
-})
-export class EmailModule {}
+@Global()
+@Module({})
+export class EmailModule {
+  static registerAsync(options: EmailModuleOptionsInterface): DynamicModule {
+    return {
+      module: EmailModule,
+      imports: options.imports ?? [],
+      providers: [
+        EmailService,
+        {
+          provide: SEND_EMAIL_TOKEN,
+          inject: options.inject ?? [],
+          useFactory: options.useFactory,
+        },
+      ],
+      controllers: [EmailController],
+      exports: [EmailService],
+    };
+  }
+}

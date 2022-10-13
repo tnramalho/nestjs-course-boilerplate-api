@@ -30,6 +30,9 @@ import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
 import { EmailModule } from './modules/email/email.module';
 import { emailConfig } from './config/email.config';
 import { authConfig } from './config/auth.config';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarEmailModule } from './modules/handlebar-email/handlebar-email.module';
+import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email.service';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -61,7 +64,14 @@ import { authConfig } from './config/auth.config';
     AuthModule,
     LoggerModule,
     UploadModule,
-    EmailModule,
+    //HandlebarEmailModule,
+    EmailModule.registerAsync({
+      imports: [HandlebarEmailModule],
+      inject: [HandlebarEmailService],
+      useFactory: (emailService: HandlebarEmailService) => {
+        return emailService;
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
