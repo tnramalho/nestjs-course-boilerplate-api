@@ -5,10 +5,10 @@ import { serverConfig } from '../../../config/server.config';
 
 @Exclude()
 export class FileResponseDto {
-  constructor(_originalname: string, _filename: string) {
+  constructor(_originalname: string, _filename: string, _url: string) {
     this.filename = _filename;
     this.originalname = _originalname;
-    this.url = this.filename;
+    this.url = _url;
   }
   @ApiProperty({
     title: 'Original file name',
@@ -27,12 +27,5 @@ export class FileResponseDto {
   filename!: string;
 
   @Expose()
-  @Transform(
-    ({ value }) => {
-      const url = `${serverConfig().api}/upload/${value}`;
-      return url;
-    },
-    { toPlainOnly: true }
-  )
   url?: string;
 }

@@ -14,7 +14,7 @@ import { Response } from 'express';
 import { UPLOAD_PATH } from '../../common/constants';
 import { ApiFileDecorator } from '../../common/decorators/api-file-decorator';
 import { imageFileFilter } from '../../common/utils/file-utils';
-import { FileResponseDto } from './dto/file-response.dto';
+import { awsS3UploadService } from './aws-s3-upload.service';
 
 @ApiTags('Upload')
 @Controller('upload')
@@ -23,6 +23,7 @@ import { FileResponseDto } from './dto/file-response.dto';
 //@UseGuards(JwtAuthGuard)
 //@Roles(RoleEnum.Admin)
 export class UploadController {
+  constructor(private s3Service: awsS3UploadService) {}
   @Post('file')
   @ApiFileDecorator()
   @ApiConsumes('multipart/form-data')
@@ -31,8 +32,8 @@ export class UploadController {
       fileFilter: imageFileFilter,
     })
   )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    const response = new FileResponseDto(file.originalname, file.filename);
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    const response = await this.s3Service.uploadFile(file);
     return instanceToPlain(response);
   }
 

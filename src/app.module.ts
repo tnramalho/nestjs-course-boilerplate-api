@@ -64,7 +64,6 @@ import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email
     AuthModule,
     LoggerModule,
     UploadModule,
-    //HandlebarEmailModule,
     EmailModule.registerAsync({
       imports: [HandlebarEmailModule],
       inject: [HandlebarEmailService],
