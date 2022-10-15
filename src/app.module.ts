@@ -33,6 +33,7 @@ import { authConfig } from './config/auth.config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarEmailModule } from './modules/handlebar-email/handlebar-email.module';
 import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email.service';
+import { githubConfig } from './config/github.config';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -48,6 +49,7 @@ import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email
         loggerSentryConfig,
         emailConfig,
         authConfig,
+        githubConfig,
         sampleConfig,
       ],
     }),

@@ -56,6 +56,13 @@ export class UserService {
     return plainToInstance(UserDto, user);
   }
 
+  public async findByEmail(email: string): Promise<UserDto> {
+    const user = await this.repo.findOne({
+      where: { email },
+    });
+    return plainToInstance(UserDto, user);
+  }
+
   public async update(
     id: string,
     updateUserDto: UpdateUserDto

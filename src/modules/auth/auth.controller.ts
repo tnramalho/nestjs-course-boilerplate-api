@@ -36,7 +36,7 @@ export class AuthController {
   })
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  login(@AuthUser() user: UserDto) {
+  login(@AuthUser() user: UserDto): Promise<AuthResponseDto> {
     return this.authService.jwtSign(user);
   }
 
