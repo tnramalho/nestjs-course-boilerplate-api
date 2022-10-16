@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { jwtConfig } from '../../config/jwt.config';
 import { EmailModule } from '../email/email.module';
+import { FederatedModule } from '../federated/federated.module';
 import { UserModule } from '../user/user.module';
 import { AuthGithubController } from './auth-github.controller';
 import { AuthController } from './auth.controller';
@@ -22,6 +23,7 @@ import { LocalStrategy } from './strategies/local-strategy';
       inject: [jwtConfig.KEY],
       useFactory: async (config: ConfigType<typeof jwtConfig>) => config,
     }),
+    FederatedModule,
   ],
   controllers: [AuthController, AuthGithubController],
   providers: [

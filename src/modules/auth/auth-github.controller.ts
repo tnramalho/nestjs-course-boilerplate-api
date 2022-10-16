@@ -25,14 +25,13 @@ export class AuthGithubController {
     return;
   }
 
-  // TODO: Check  why post does not work for a callback
   @ApiOkResponse({
     type: AuthResponseDto,
     description: 'DTO containing an access token and a refresh token.',
   })
   @UseGuards(GithubAuthGuard)
   @Get('callback')
-  async get(@Request() req: any) {
-    return instanceToPlain(req.user);
+  async get(@AuthUser() user: UserDto) {
+    return this.authService.jwtSign(user);
   }
 }

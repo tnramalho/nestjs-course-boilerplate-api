@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { Federated } from '../modules/federated/federated.entity';
 import { Role } from '../modules/role/role.entity';
 import { UserRole } from '../modules/user-role/user-role.entity';
 import { User } from '../modules/user/user.entity';
@@ -13,7 +14,7 @@ export default new DataSource({
     'string' === typeof process.env.DATABASE_MIGRATIONS_RUN
       ? process.env.DATABASE_MIGRATIONS_RUN === 'true'
       : false,
-  entities: [User, Role, UserRole],
+  entities: [User, Role, UserRole, Federated],
   subscribers: [UserSubscriber],
   synchronize:
     'string' === typeof process.env.DATABASE_SYNCHRONIZE

@@ -47,7 +47,7 @@ export class UserDto
   @MinLength(USER_NAME_MIN_LENGTH)
   @MaxLength(USER_NAME_MAX_LENGTH)
   @Expose()
-  firstName!: string;
+  firstName?: string;
 
   @ApiProperty({
     title: 'Last Name',
@@ -59,7 +59,7 @@ export class UserDto
   @MinLength(USER_NAME_MIN_LENGTH)
   @MaxLength(USER_NAME_MAX_LENGTH)
   @Expose()
-  lastName!: string;
+  lastName?: string;
 
   @ApiProperty({
     title: 'Email',

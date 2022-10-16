@@ -8,6 +8,7 @@ import {
   Delete,
   Inject,
   CACHE_MANAGER,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -18,6 +19,7 @@ import {
 } from '@nestjs/swagger';
 import { Cache } from 'cache-manager';
 import { IsUUIDParam } from '../../common/decorators/is-strong-password';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
 import { Roles } from '../role/decorator/roles.decorator';
 import { RoleEnum } from '../role/enum/role.enum';
 import { USER_REPORT_CACHE_KEY } from './constant/user.constants';
@@ -30,7 +32,7 @@ import { UserService } from './user.service';
 @Controller('users')
 @ApiBearerAuth()
 //@UseGuards(RolesGuard)
-//@UseGuards(JwtAuthGuard)
+@UseGuards(JwtAuthGuard)
 @Roles(RoleEnum.Admin)
 export class UserController {
   constructor(

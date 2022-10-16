@@ -7,6 +7,6 @@ export const githubConfig = registerAs(
   (): GithubConfigInterface => ({
     clientId: process.env.GITHUB_CLIENT_ID ?? 'client_id',
     clientSecret: process.env.GITHUB_CLIENT_SECRET ?? 'secret',
-    callbackURL: process.env.GITHUB_CALLBACK_URL ?? 'callback_url'
+    callbackURL: process.env.GITHUB_CALLBACK_URL ?? 'callback_url',
   })
 );

@@ -1,6 +1,6 @@
-export interface GitHubProfile {
-  id?: string;
+export interface GitHubProfileInterface {
+  id: string;
   username?: string;
   displayName?: string;
-  email?: string;
+  emails: { value: string }[];
 }

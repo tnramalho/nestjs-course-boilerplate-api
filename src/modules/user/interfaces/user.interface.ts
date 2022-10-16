@@ -4,8 +4,8 @@ import { CommonEntityInterface } from '../../../common/interfaces';
 import { UserRoleInterface } from '../../user-role/interfaces';
 
 export interface UserInterface extends CommonEntityInterface {
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   username: string;
   password: string;
   salt: string;

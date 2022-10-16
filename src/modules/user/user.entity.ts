@@ -2,6 +2,7 @@ import { Entity, Column, Unique, OneToMany } from 'typeorm';
 import { UserInterface } from './interfaces';
 import { CommonEntity } from '../../common/common.entity';
 import { UserRole } from '../user-role/user-role.entity';
+import { Federated } from '../federated/federated.entity';
 
 @Entity()
 @Unique(['username'])
@@ -22,7 +23,7 @@ export class User extends CommonEntity implements UserInterface {
   @Column({ type: 'citext', nullable: true })
   lastName!: string;
 
-  @Column({ type: 'citext' })
+  @Column({ type: 'citext', nullable: true })
   email!: string;
 
   @Column({ default: true, nullable: false })
@@ -36,4 +37,7 @@ export class User extends CommonEntity implements UserInterface {
 
   @OneToMany(() => UserRole, userRole => userRole.user)
   userRoles?: UserRole[];
+
+  @OneToMany(() => Federated, federated => federated.user)
+  federated?: Federated[];
 }

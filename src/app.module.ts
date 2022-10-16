@@ -34,6 +34,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarEmailModule } from './modules/handlebar-email/handlebar-email.module';
 import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email.service';
 import { githubConfig } from './config/github.config';
+import { FederatedModule } from './modules/federated/federated.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -73,6 +74,7 @@ import { githubConfig } from './config/github.config';
         return emailService;
       },
     }),
+    FederatedModule,
   ],
   controllers: [AppController],
   providers: [AppService],
