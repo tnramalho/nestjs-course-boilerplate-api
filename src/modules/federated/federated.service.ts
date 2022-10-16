@@ -47,6 +47,7 @@ export class FederatedService {
       return user;
     }
   }
+
   protected async createUserWithFederated(
     provider: string,
     email: string,

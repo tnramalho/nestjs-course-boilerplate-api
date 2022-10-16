@@ -5,9 +5,9 @@ export const awsS3Config = registerAs(
   'AWS_MODULE_S3_CONFIG',
   (): AwsS3ConfigInterface => {
     return {
-      accessKeyId: process.env?.AWS_S3_ACCESS_KEY ?? '',
-      secretAccessKey: process.env?.AWS_S3_KEY_SECRET ?? '',
-      bucket: process.env?.AWS_S3_BUCKET ?? '',
+      accessKeyId: process.env?.BUCKETEER_AWS_ACCESS_KEY_ID ?? '',
+      secretAccessKey: process.env?.BUCKETEER_AWS_SECRET_ACCESS_KEY ?? '',
+      bucket: process.env?.BUCKETEER_BUCKET_NAME ?? '',
     };
   }
 );

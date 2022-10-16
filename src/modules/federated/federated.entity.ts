@@ -5,15 +5,9 @@ import { FederatedInterface } from './interfaces';
 
 @Entity()
 export class Federated extends CommonEntity implements FederatedInterface {
-  /**
-   * provider
-   */
   @Column()
   provider!: string;
 
-  /**
-   * subject
-   */
   @Column()
   providerRef!: string;
 
