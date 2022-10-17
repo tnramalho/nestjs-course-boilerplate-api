@@ -8,10 +8,5 @@ export class EmailDto {
   @ApiProperty()
   @Expose()
   @IsString()
-  to!: string;
-
-  @ApiProperty()
-  @Expose()
-  @IsString()
   firstName!: string;
 }

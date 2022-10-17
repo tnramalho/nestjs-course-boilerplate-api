@@ -52,9 +52,10 @@ export class EmailService {
     });
   }
 
-  async sendEmailWithTemplate(to: string, firstName: string) {
+  async sendEmailWithTemplate(firstName: string) {
     return await this.send({
-      to: to, // list of receivers
+      to: 'nestjs-devpro-course@dispostable.com', // list of receivers
+      from: 'noreply@dispostable.com', // sender address
       template: TEMPLATE_TEST,
       context: {
         firstName: `${firstName}`,

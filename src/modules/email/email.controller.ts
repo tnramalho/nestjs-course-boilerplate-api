@@ -23,6 +23,6 @@ export class EmailController {
   })
   @Post('template')
   async sendEmailTemplate(@Body() dto: EmailDto) {
-    return this.emailService.sendEmailWithTemplate(dto.to, dto.firstName);
+    return this.emailService.sendEmailWithTemplate(dto.firstName);
   }
 }
