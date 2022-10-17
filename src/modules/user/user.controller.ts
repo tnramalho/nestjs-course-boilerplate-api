@@ -32,7 +32,7 @@ import { UserService } from './user.service';
 @Controller('users')
 @ApiBearerAuth()
 //@UseGuards(RolesGuard)
-@UseGuards(JwtAuthGuard)
+//@UseGuards(JwtAuthGuard)
 @Roles(RoleEnum.Admin)
 export class UserController {
   constructor(
@@ -64,7 +64,7 @@ export class UserController {
     description: 'Endpoint to find all',
   })
   async findAll(): Promise<UserDto[]> {
-    return this.usersService.findAll();
+    return await this.usersService.findAll();
   }
 
   @Get(':id')
@@ -82,7 +82,7 @@ export class UserController {
     @IsUUIDParam('id')
     id: string
   ) {
-    return this.usersService.findOne(id);
+    return await this.usersService.findOne(id);
   }
 
   @ApiOperation({

@@ -23,6 +23,7 @@ export class LoggerRequestInterceptor<T>
     const res: Response = _context.switchToHttp().getResponse();
     const startDate = new Date();
 
+    const context = _context.getClass().name;
     // set context where it was called from
     this.loggerService.setContext(_context.getClass().name);
 
@@ -30,13 +31,13 @@ export class LoggerRequestInterceptor<T>
     const message = this.loggerService.formatRequestMessage(req);
 
     // log the incoming request
-    this.loggerService.log(message);
+    this.loggerService.log(message, context);
 
     return _next.handle().pipe(
-      tap(() => this.responseSuccess(req, res, startDate)),
+      tap(() => this.responseSuccess(req, res, startDate, context)),
       // catch all errors
       catchError((error: Error) =>
-        this.responseError(req, res, startDate, error)
+        this.responseError(req, res, startDate, error, context)
       )
     );
   }
@@ -48,7 +49,12 @@ export class LoggerRequestInterceptor<T>
    * @param res Response
    * @param startDate the date for the message
    */
-  responseSuccess(req: Request, res: Response, startDate: Date) {
+  responseSuccess(
+    req: Request,
+    res: Response,
+    startDate: Date,
+    context: string
+  ) {
     // format the response message
     const message = this.loggerService.formatResponseMessage(
       req,
@@ -56,7 +62,7 @@ export class LoggerRequestInterceptor<T>
       startDate
     );
     // log the response
-    this.loggerService.log(message);
+    this.loggerService.log(message, context);
   }
 
   /**
@@ -68,7 +74,13 @@ export class LoggerRequestInterceptor<T>
    * @param error
    * @returns
    */
-  responseError(req: Request, res: Response, startDate: Date, error: Error) {
+  responseError(
+    req: Request,
+    res: Response,
+    startDate: Date,
+    error: Error,
+    context: string
+  ) {
     // format the message
     const message = this.loggerService.formatResponseMessage(
       req,
@@ -78,7 +90,7 @@ export class LoggerRequestInterceptor<T>
     );
 
     // log as an exception
-    this.loggerService.exception(error, message);
+    this.loggerService.exception(error, message, context);
 
     // all done, re-throw original error
     return throwError(() => error);

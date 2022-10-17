@@ -18,7 +18,6 @@ import { LocalStrategy } from './strategies/local-strategy';
   imports: [
     forwardRef(() => UserModule),
     PassportModule,
-    //EmailModule,
     JwtModule.registerAsync({
       inject: [jwtConfig.KEY],
       useFactory: async (config: ConfigType<typeof jwtConfig>) => config,

@@ -8,8 +8,8 @@ export class UserFactory extends Factory<User> {
     const user = new User();
     user.firstName = faker.name.firstName();
     user.lastName = faker.name.lastName();
-    user.username = faker.internet.userName();
-    user.email = faker.internet.email();
+    user.username = faker.helpers.unique(faker.internet.userName);
+    user.email = faker.helpers.unique(faker.internet.email);
     user.password = password;
     return user;
   }
