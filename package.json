@@ -10,7 +10,9 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "start:doc": "npx compodoc -p tsconfig.json -s",
     "start:dev": "nest start --watch",
+    "start:dev:doc": "yarn start:dev & yarn start:doc",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -65,6 +67,7 @@
     "typeorm": "^0.3.9"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.19",
     "@concepta/typeorm-seeding": "^4.0.0-beta.0",
     "@faker-js/faker": "^7.5.0",
     "@nestjs/cli": "^9.1.4",

@@ -12,6 +12,8 @@ async function bootstrap() {
   const appServerConfig = serverConfig();
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors(appServerConfig.cors);
+
   // Add Globals
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ErrorCodeExceptionFilter());
