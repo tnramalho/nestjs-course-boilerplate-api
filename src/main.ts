@@ -28,6 +28,6 @@ async function bootstrap() {
   // Register swagger for development
   await swagger(app, appServerConfig.environment);
 
-  await app.listen(3000);
+  await app.listen(appServerConfig.port || 3000);
 }
 bootstrap();
