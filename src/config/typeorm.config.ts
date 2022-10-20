@@ -44,6 +44,10 @@ export const typeormConfig = registerAs(
       autoLoadEntities: true,
       logging: true,
       logger: 'file',
+      ssl:
+        'string' === typeof process.env.DATABASE_SSL
+          ? process.env.DATABASE_SSL === 'true'
+          : false,
     };
   }
 );
