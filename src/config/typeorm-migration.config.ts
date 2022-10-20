@@ -5,6 +5,11 @@ import { UserRole } from '../modules/user-role/user-role.entity';
 import { User } from '../modules/user/user.entity';
 import { UserSubscriber } from '../modules/user/user.subscriber';
 
+const dbSSL =
+  'string' === typeof process.env.DATABASE_SSL
+    ? process.env.DATABASE_SSL === 'true'
+    : process.env.DATABASE_SSL || false;
+
 export default new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL
@@ -22,4 +27,9 @@ export default new DataSource({
       : false,
   migrations: [__dirname + '/../migrations/*.{js,ts}'],
   logging: true,
+  ssl: dbSSL
+    ? {
+        rejectUnauthorized: false,
+      }
+    : false,
 });

@@ -25,6 +25,11 @@ const config = {
 export const typeormConfig = registerAs(
   TYPEORM_MODULE_CONFIG,
   (): TypeOrmModuleOptions => {
+    const dbSSL =
+      'string' === typeof process.env.DATABASE_SSL
+        ? process.env.DATABASE_SSL === 'true'
+        : process.env.DATABASE_SSL || false;
+
     return {
       type: 'postgres',
       url: process.env.DATABASE_URL
@@ -44,10 +49,11 @@ export const typeormConfig = registerAs(
       autoLoadEntities: true,
       logging: true,
       logger: 'file',
-      ssl:
-        'string' === typeof process.env.DATABASE_SSL
-          ? process.env.DATABASE_SSL === 'true'
-          : false,
+      ssl: dbSSL
+        ? {
+            rejectUnauthorized: false,
+          }
+        : false,
     };
   }
 );
