@@ -14,6 +14,7 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { UUIDParam } from '../../common/decorators/is-uuid-param';
 import { UserDto } from '../user/dto/user.dto';
@@ -28,6 +29,7 @@ import { JwtAuthGuard } from './guards/jwt-auth-guard';
 import { LocalAuthGuard } from './guards/local-auth-guard';
 
 @Controller('auth')
+@ApiTags('Auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
   @ApiBody({
