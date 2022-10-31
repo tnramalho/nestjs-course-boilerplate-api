@@ -8,7 +8,7 @@ import { AuthResponseDto } from './dto/auth-response.dto';
 import { GithubAuthGuard } from './guards/github-auth-guard';
 
 @Controller('auth/github')
-@ApiTags('auth')
+@ApiTags('Auth')
 export class AuthGithubController {
   constructor(private authService: AuthService) {}
 
