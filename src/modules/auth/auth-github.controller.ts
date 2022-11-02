@@ -1,7 +1,7 @@
 import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { instanceToPlain } from 'class-transformer';
-import { UserDto } from '../user/dto/user.dto';
+import { UserDto } from '../../web/controller/user/dto/user.dto';
 import { AuthService } from './auth.service';
 import { AuthUser } from './decorator/auth-user.decorator';
 import { AuthResponseDto } from './dto/auth-response.dto';

@@ -1,6 +1,6 @@
 import { CommonEntity } from '../../common/common.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { User } from '../user/user.entity';
+import { User } from '../../core/user/domain/user.entity';
 import { FederatedInterface } from './interfaces';
 
 @Entity()

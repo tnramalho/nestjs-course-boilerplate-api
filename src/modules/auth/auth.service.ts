@@ -12,13 +12,14 @@ import { jwtConfig } from '../../config/jwt.config';
 import { EmailService } from '../email/email.service';
 import { EmailOptionsInterface } from '../email/interfaces/email-options.interface';
 import { LoggerService } from '../logger/logger.service';
-import { UserDto } from '../user/dto/user.dto';
-import { User } from '../user/user.entity';
-import { UserService } from '../user/user.service';
+import { UserDto } from '../../web/controller/user/dto/user.dto';
+import { User } from '../../core/user/domain/user.entity';
+import { UserService } from '../../web/controller/user/user.service';
 import { AuthRefreshDto } from './dto/auth-refresh.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { AuthUpdatePasswordDto } from './dto/auth-update-password.dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { UserInterface } from '../../core/user/domain/interfaces';
 
 @Injectable()
 export class AuthService {
@@ -38,7 +39,7 @@ export class AuthService {
   async validateUser(
     username: string,
     password: string
-  ): Promise<UserDto | null> {
+  ): Promise<UserInterface | null> {
     const user = await this.userService.validateUserPassword(
       username,
       password
@@ -47,7 +48,7 @@ export class AuthService {
     return user;
   }
 
-  async jwtSign(user: UserDto): Promise<AuthResponseDto> {
+  async jwtSign(user: UserDto | UserInterface): Promise<AuthResponseDto> {
     const accessConfig = this._jwtConfig.access;
     const refreshConfig = this._jwtConfig.refresh;
 
@@ -130,7 +131,9 @@ export class AuthService {
     return ttl;
   }
 
-  private async updateResetTokenIfValid(email: string): Promise<User | null> {
+  private async updateResetTokenIfValid(
+    email: string
+  ): Promise<UserInterface | null> {
     // get the ttl and nodemailer configs
     const ttl = this.ttlConfig();
 

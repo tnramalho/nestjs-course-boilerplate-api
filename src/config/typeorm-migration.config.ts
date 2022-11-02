@@ -2,8 +2,9 @@ import { DataSource } from 'typeorm';
 import { Federated } from '../modules/federated/federated.entity';
 import { Role } from '../modules/role/role.entity';
 import { UserRole } from '../modules/user-role/user-role.entity';
-import { User } from '../modules/user/user.entity';
-import { UserSubscriber } from '../modules/user/user.subscriber';
+import { User } from '../core/user/domain/user.entity';
+import { UserSubscriber } from '../infrastructure/database/postgres/user/user.subscriber';
+
 
 const dbSSL =
   'string' === typeof process.env.DATABASE_SSL

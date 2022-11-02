@@ -1,11 +1,10 @@
-//import { UserRoleInterface } from 'src/modules/user-role/interfaces';
-
-import { CommonEntityInterface } from '../../../common/interfaces';
-import { UserRoleInterface } from '../../user-role/interfaces';
+import { CommonEntityInterface } from '../../../../common/interfaces';
+import { UserRoleInterface } from '../../../../modules/user-role/interfaces';
 
 export interface UserInterface extends CommonEntityInterface {
   firstName?: string;
   lastName?: string;
+  email: string;
   username: string;
   password: string;
   salt: string;

@@ -4,9 +4,10 @@ import {
   PartialType,
   PickType,
 } from '@nestjs/swagger';
-import { IsStrongPassword } from '../../../common/decorators/is-strong-password';
-import { UserCreatableInterface } from '../interfaces';
-import { USER_PASSWORD_MIN_LENGTH } from '../constant/user.constants';
+import { IsStrongPassword } from '../../../../common/decorators/is-strong-password';
+import { UserCreatableInterface } from '../../../../core/user/domain/interfaces';
+import { User } from '../../../../core/user/domain/user.entity';
+import { USER_PASSWORD_MIN_LENGTH } from './constant/user.constants';
 import { UserDto } from './user.dto';
 
 export class CreateUserDto
@@ -18,6 +19,9 @@ export class CreateUserDto
   )
   implements UserCreatableInterface
 {
+  async validate(): Promise<void> {
+    await User.validate(this);
+  }
   @ApiProperty({
     title: 'Password',
     description:

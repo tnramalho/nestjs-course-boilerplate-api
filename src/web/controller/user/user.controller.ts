@@ -18,11 +18,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { Cache } from 'cache-manager';
-import { IsUUIDParam } from '../../common/decorators/is-strong-password';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth-guard';
-import { Roles } from '../role/decorator/roles.decorator';
-import { RoleEnum } from '../role/enum/role.enum';
-import { USER_REPORT_CACHE_KEY } from './constant/user.constants';
+import { plainToInstance } from 'class-transformer';
+import { IsUUIDParam } from '../../../common/decorators/is-strong-password';
+import { JwtAuthGuard } from '../../../modules/auth/guards/jwt-auth-guard';
+import { Roles } from '../../../modules/role/decorator/roles.decorator';
+import { RoleEnum } from '../../../modules/role/enum/role.enum';
+import { USER_REPORT_CACHE_KEY } from './dto/constant/user.constants';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
@@ -54,8 +55,8 @@ export class UserController {
   })
   async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     const user = await this.usersService.create(createUserDto);
-    this.updateReportCache();
-    return user;
+    return plainToInstance(UserDto, user);
+    //return user;
   }
 
   @Get()
@@ -64,7 +65,8 @@ export class UserController {
     description: 'Endpoint to find all',
   })
   async findAll(): Promise<UserDto[]> {
-    return await this.usersService.findAll();
+    const users = await this.usersService.findAll();
+    return plainToInstance(UserDto, users);
   }
 
   @Get(':id')

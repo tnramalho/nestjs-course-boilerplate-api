@@ -1,6 +1,6 @@
 import { Seeder } from '@concepta/typeorm-seeding';
-import { RoleFactory } from '../role/role.factory';
-import { UserRoleFactory } from '../user-role/user-role.factory';
+import { RoleFactory } from '../../../../modules/role/role.factory';
+import { UserRoleFactory } from '../../../../modules/user-role/user-role.factory';
 import { UserFactory } from './user.factory';
 
 export class UserSeeder extends Seeder {

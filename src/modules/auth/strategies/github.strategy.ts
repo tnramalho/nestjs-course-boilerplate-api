@@ -4,7 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import Strategy from 'passport-github';
 import { githubConfig } from '../../../config/github.config';
 import { FederatedService } from '../../federated/federated.service';
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../../web/controller/user/user.service';
 import { GitHubProfileInterface } from '../interfaces/github-profile.interface';
 
 @Injectable()

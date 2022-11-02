@@ -1,8 +1,15 @@
 import { Entity, Column, Unique, OneToMany } from 'typeorm';
-import { UserInterface } from './interfaces';
-import { CommonEntity } from '../../common/common.entity';
-import { UserRole } from '../user-role/user-role.entity';
-import { Federated } from '../federated/federated.entity';
+import { CommonEntity } from '../../../common/common.entity';
+import { UserRole } from '../../../modules/user-role/user-role.entity';
+import { Federated } from '../../../modules/federated/federated.entity';
+import { plainToInstance } from 'class-transformer';
+import { validate } from 'class-validator';
+import { BadRequestException } from '@nestjs/common';
+import {
+  UserCreatableInterface,
+  UserInterface,
+  UserUpdatableInterface,
+} from './interfaces';
 
 @Entity()
 @Unique(['username'])
@@ -40,4 +47,22 @@ export class User extends CommonEntity implements UserInterface {
 
   @OneToMany(() => Federated, federated => federated.user)
   federated?: Federated[];
+
+  static async validate(
+    plainDto: UserCreatableInterface | UserUpdatableInterface
+  ) {
+    // convert to dto
+    const dto = plainToInstance(User, plainDto);
+
+    // validate the data
+    const validationErrors = await validate(dto);
+
+    // any errors?
+    if (validationErrors.length) {
+      // yes, throw error
+      throw new BadRequestException(validationErrors);
+    }
+
+    return dto;
+  }
 }

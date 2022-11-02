@@ -4,8 +4,9 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Federated } from './federated.entity';
-import { UserService } from '../user/user.service';
-import { UserDto } from '../user/dto/user.dto';
+import { UserService } from '../../web/controller/user/user.service';
+import { UserDto } from '../../web/controller/user/dto/user.dto';
+import { UserInterface } from '../../core/user/domain/interfaces';
 
 @Injectable()
 export class FederatedService {
@@ -28,7 +29,7 @@ export class FederatedService {
     provider: string,
     email: string,
     providerRef: string
-  ): Promise<UserDto> {
+  ): Promise<UserInterface> {
     // check if Federated Exists
     const federated = await this.exists(provider, providerRef);
 
@@ -52,7 +53,7 @@ export class FederatedService {
     provider: string,
     email: string,
     providerRef: string
-  ): Promise<UserDto> {
+  ): Promise<UserInterface> {
     // Check if user exists by email
     const user = await this.userService.findByEmail(email);
 
@@ -90,7 +91,7 @@ export class FederatedService {
   protected async createUser(
     email: string,
     username: string
-  ): Promise<UserDto> {
+  ): Promise<UserInterface> {
     try {
       const newUser = await this.userService.create({
         email,

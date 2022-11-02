@@ -2,9 +2,8 @@ import { Exclude, Expose, Transform, Type } from 'class-transformer';
 
 import { ApiProperty } from '@nestjs/swagger';
 
-import { UserRoleDto } from '../../user-role/dto/user-role.dto';
-import { UserInterface } from '../interfaces';
-import { CommonEntityDto } from '../../../common/dto';
+import { UserRoleDto } from '../../../../modules/user-role/dto/user-role.dto';
+import { CommonEntityDto } from '../../../../common/dto';
 import {
   IsBoolean,
   IsEmail,
@@ -17,7 +16,8 @@ import {
   USER_EMAIL_MIN_LENGTH,
   USER_NAME_MAX_LENGTH,
   USER_NAME_MIN_LENGTH,
-} from '../constant/user.constants';
+} from './constant/user.constants';
+import { UserInterface } from '../../../../core/user/domain/interfaces';
 
 @Exclude()
 export class UserDto

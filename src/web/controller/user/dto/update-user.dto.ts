@@ -1,5 +1,5 @@
 import { IntersectionType, PartialType, PickType } from '@nestjs/swagger';
-import { UserUpdatableInterface } from '../interfaces';
+import { UserUpdatableInterface } from '../../../../core/user/domain/interfaces';
 import { CreateUserDto } from './create-user.dto';
 import { UserDto } from './user.dto';
 

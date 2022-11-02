@@ -10,9 +10,9 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Cache } from 'cache-manager';
-import { Roles } from '../role/decorator/roles.decorator';
-import { RoleEnum } from '../role/enum/role.enum';
-import { USER_REPORT_CACHE_KEY } from './constant/user.constants';
+import { Roles } from '../../../modules/role/decorator/roles.decorator';
+import { RoleEnum } from '../../../modules/role/enum/role.enum';
+import { USER_REPORT_CACHE_KEY } from './dto/constant/user.constants';
 import { UserService } from './user.service';
 
 @ApiTags('Users')
