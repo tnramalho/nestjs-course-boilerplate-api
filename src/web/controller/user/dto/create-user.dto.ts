@@ -6,7 +6,7 @@ import {
 } from '@nestjs/swagger';
 import { IsStrongPassword } from '../../../../common/decorators/is-strong-password';
 import { UserCreatableInterface } from '../../../../core/user/domain/interfaces';
-import { User } from '../../../../core/user/domain/user.entity';
+import { User } from '../../../../infrastructure/database/postgres/user/user.entity';
 import { USER_PASSWORD_MIN_LENGTH } from './constant/user.constants';
 import { UserDto } from './user.dto';
 

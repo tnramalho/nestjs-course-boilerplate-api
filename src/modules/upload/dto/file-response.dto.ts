@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Exclude, Expose, Transform } from 'class-transformer';
 import { IsString } from 'class-validator';
-import { serverConfig } from '../../../config/server.config';
+import { serverConfig } from '../../../infrastructure/config/server.config';
 
 @Exclude()
 export class FileResponseDto {

@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { TYPEORM_MODULE_CONFIG } from '../common/constants';
-import { UserSubscriber } from '../infrastructure/database/postgres/user/user.subscriber';
+import { TYPEORM_MODULE_CONFIG } from '../../common/constants';
+import { UserSubscriber } from '../database/postgres/user/user.subscriber';
 
 /*
 Configurations for postgres

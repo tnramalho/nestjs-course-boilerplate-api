@@ -1,7 +1,7 @@
 import { ConfigType } from '@nestjs/config';
 import { Inject, Injectable, LogLevel } from '@nestjs/common';
 import { LoggerTransportInterface } from './interfaces/logger-transport.interface';
-import { loggerConfig } from '../../config/logger.config';
+import { loggerConfig } from '../../infrastructure/config/logger.config';
 
 @Injectable()
 export class LoggerTransportService {

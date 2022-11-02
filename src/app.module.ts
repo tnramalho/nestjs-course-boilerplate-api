@@ -11,13 +11,11 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { jwtConfig } from './config/jwt.config';
-import { loggerSentryConfig } from './config/logger-sentry.config';
-import { loggerConfig } from './config/logger.config';
-import sampleConfig from './config/sample.config';
-import { typeormConfig } from './config/typeorm.config';
+import { jwtConfig } from './infrastructure/config/jwt.config';
+import { loggerSentryConfig } from './infrastructure/config/logger-sentry.config';
+import { loggerConfig } from './infrastructure/config/logger.config';
+import sampleConfig from './infrastructure/config/sample.config';
+import { typeormConfig } from './infrastructure/config/typeorm.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { ApiKeyMiddleware } from './modules/auth/midleware/api-key.middleware';
 import { LoggerModule } from './modules/logger/logger.module';
@@ -28,12 +26,12 @@ import { UserModule } from './modules/user/user.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { PUBLIC_FOLDER_NAME, PUBLIC_URL } from './common/constants';
 import { EmailModule } from './modules/email/email.module';
-import { emailConfig } from './config/email.config';
-import { authConfig } from './config/auth.config';
+import { emailConfig } from './infrastructure/config/email.config';
+import { authConfig } from './infrastructure/config/auth.config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarEmailModule } from './modules/handlebar-email/handlebar-email.module';
 import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email.service';
-import { githubConfig } from './config/github.config';
+import { githubConfig } from './infrastructure/config/github.config';
 import { FederatedModule } from './modules/federated/federated.module';
 @Module({
   imports: [
@@ -76,8 +74,8 @@ import { FederatedModule } from './modules/federated/federated.module';
     }),
     FederatedModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

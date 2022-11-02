@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { GITHUB_MODULE_CONFIG } from '../common/constants';
-import { GithubConfigInterface } from '../common/interfaces/github-config.interface';
+import { GITHUB_MODULE_CONFIG } from '../../common/constants';
+import { GithubConfigInterface } from '../../common/interfaces/github-config.interface';
 
 export const githubConfig = registerAs(
   GITHUB_MODULE_CONFIG,

@@ -2,7 +2,7 @@ import { forwardRef, Module } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { jwtConfig } from '../../config/jwt.config';
+import { jwtConfig } from '../../infrastructure/config/jwt.config';
 import { EmailModule } from '../email/email.module';
 import { FederatedModule } from '../federated/federated.module';
 import { UserModule } from '../user/user.module';

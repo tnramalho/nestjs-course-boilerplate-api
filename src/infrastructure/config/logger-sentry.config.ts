@@ -1,7 +1,7 @@
 import { registerAs } from '@nestjs/config';
 import { LogLevel } from '@nestjs/common';
 import { SeverityLevel } from '@sentry/types';
-import { LoggerSentryConfigInterface } from '../modules/logger/interfaces';
+import { LoggerSentryConfigInterface } from '../../modules/logger/interfaces';
 
 export const loggerSentryConfig = registerAs(
   'LOGGER_MODULE_SENTRY_CONFIG',

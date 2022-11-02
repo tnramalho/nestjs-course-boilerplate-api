@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { JWT_MODULE_CONFIG } from '../common/constants';
-import { JwtConfigInterface } from '../common/interfaces';
+import { JWT_MODULE_CONFIG } from '../../common/constants';
+import { JwtConfigInterface } from '../../common/interfaces';
 
 export const jwtConfig = registerAs(
   JWT_MODULE_CONFIG,

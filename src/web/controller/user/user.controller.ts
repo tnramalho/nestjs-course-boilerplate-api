@@ -23,6 +23,7 @@ import { IsUUIDParam } from '../../../common/decorators/is-strong-password';
 import { JwtAuthGuard } from '../../../modules/auth/guards/jwt-auth-guard';
 import { Roles } from '../../../modules/role/decorator/roles.decorator';
 import { RoleEnum } from '../../../modules/role/enum/role.enum';
+import { UserPresenter } from '../../presenter/user.presenter';
 import { USER_REPORT_CACHE_KEY } from './dto/constant/user.constants';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -55,8 +56,7 @@ export class UserController {
   })
   async create(@Body() createUserDto: CreateUserDto): Promise<UserDto> {
     const user = await this.usersService.create(createUserDto);
-    return plainToInstance(UserDto, user);
-    //return user;
+    return UserPresenter.toJson(user);
   }
 
   @Get()
@@ -66,7 +66,7 @@ export class UserController {
   })
   async findAll(): Promise<UserDto[]> {
     const users = await this.usersService.findAll();
-    return plainToInstance(UserDto, users);
+    return UserPresenter.toArrayJson(users);
   }
 
   @Get(':id')

@@ -1,6 +1,6 @@
 import { registerAs } from '@nestjs/config';
-import { SERVER_CONFIG } from '../common/constants';
-import { ServerConfigInterface } from '../common/interfaces';
+import { SERVER_CONFIG } from '../../common/constants';
+import { ServerConfigInterface } from '../../common/interfaces';
 
 export const serverConfig = registerAs(
   SERVER_CONFIG,

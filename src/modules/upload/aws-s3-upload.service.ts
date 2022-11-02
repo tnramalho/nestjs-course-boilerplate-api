@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { S3 } from 'aws-sdk';
-import { awsS3Config } from '../../config/aws-s3.config';
+import { awsS3Config } from '../../infrastructure/config/aws-s3.config';
 import { FileResponseDto } from './dto/file-response.dto';
 
 @Injectable()

@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
-import { Federated } from '../modules/federated/federated.entity';
-import { Role } from '../modules/role/role.entity';
-import { UserRole } from '../modules/user-role/user-role.entity';
-import { User } from '../core/user/domain/user.entity';
-import { UserSubscriber } from '../infrastructure/database/postgres/user/user.subscriber';
+import { Federated } from '../../modules/federated/federated.entity';
+import { Role } from '../../modules/role/role.entity';
+import { UserRole } from '../../modules/user-role/user-role.entity';
+import { User } from '../database/postgres/user/user.entity';
+import { UserSubscriber } from '../database/postgres/user/user.subscriber';
 
 
 const dbSSL =

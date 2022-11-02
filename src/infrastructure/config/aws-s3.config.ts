@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import AwsS3ConfigInterface from '../modules/upload/interfaces/aws-s3-config.interface';
+import AwsS3ConfigInterface from '../../modules/upload/interfaces/aws-s3-config.interface';
 
 export const awsS3Config = registerAs(
   'AWS_MODULE_S3_CONFIG',

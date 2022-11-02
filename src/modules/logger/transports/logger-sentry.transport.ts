@@ -2,7 +2,7 @@ import { ConfigType } from '@nestjs/config';
 import * as Sentry from '@sentry/node';
 import { Inject, Injectable, LogLevel } from '@nestjs/common';
 import { LoggerTransportInterface } from '../interfaces';
-import { loggerSentryConfig } from '../../../config/logger-sentry.config';
+import { loggerSentryConfig } from '../../../infrastructure/config/logger-sentry.config';
 
 @Injectable()
 export class LoggerSentryTransport implements LoggerTransportInterface {

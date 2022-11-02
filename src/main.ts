@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { swagger } from './common/doc/swagger';
 import { ErrorCodeExceptionFilter } from './common/filters/error-code-exception.filter';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
-import { serverConfig } from './config/server.config';
+import { serverConfig } from './infrastructure/config/server.config';
 import { LoggerService } from './modules/logger/logger.service';
 import { LoggerSentryTransport } from './modules/logger/transports/logger-sentry.transport';
 

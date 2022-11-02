@@ -2,7 +2,7 @@ import { Entity, Column, Unique, ManyToOne } from 'typeorm';
 import { UserRoleInterface } from './interfaces';
 import { CommonEntity } from '../../common/common.entity';
 import { Role } from '../role/role.entity';
-import { User } from '../../core/user/domain/user.entity';
+import { User } from '../../infrastructure/database/postgres/user/user.entity';
 
 @Entity()
 @Unique(['userId', 'roleId'])

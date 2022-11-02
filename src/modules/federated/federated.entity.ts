@@ -1,7 +1,7 @@
 import { CommonEntity } from '../../common/common.entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { User } from '../../core/user/domain/user.entity';
 import { FederatedInterface } from './interfaces';
+import { User } from '../../infrastructure/database/postgres/user/user.entity';
 
 @Entity()
 export class Federated extends CommonEntity implements FederatedInterface {

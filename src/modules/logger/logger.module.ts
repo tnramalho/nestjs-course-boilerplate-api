@@ -6,8 +6,8 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LoggerExceptionFilter } from './logger-exception.filter';
 import { LoggerRequestInterceptor } from './logger-request.interceptor';
 import { LoggerSentryTransport } from './transports/logger-sentry.transport';
-import { loggerConfig } from '../../config/logger.config';
-import { loggerSentryConfig } from '../../config/logger-sentry.config';
+import { loggerConfig } from '../../infrastructure/config/logger.config';
+import { loggerSentryConfig } from '../../infrastructure/config/logger-sentry.config';
 
 @Global()
 @Module({
