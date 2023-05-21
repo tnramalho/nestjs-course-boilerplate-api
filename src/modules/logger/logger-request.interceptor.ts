@@ -31,7 +31,7 @@ export class LoggerRequestInterceptor<T>
     const message = this.loggerService.formatRequestMessage(req);
 
     // log the incoming request
-    this.loggerService.log(message, context);
+    //this.loggerService.log(message, context);
 
     return _next.handle().pipe(
       tap(() => this.responseSuccess(req, res, startDate, context)),
@@ -62,7 +62,7 @@ export class LoggerRequestInterceptor<T>
       startDate
     );
     // log the response
-    this.loggerService.log(message, context);
+   // this.loggerService.log(message, context);
   }
 
   /**

@@ -35,6 +35,8 @@ import { HandlebarEmailModule } from './modules/handlebar-email/handlebar-email.
 import { HandlebarEmailService } from './modules/handlebar-email/handlebar-email.service';
 import { githubConfig } from './config/github.config';
 import { FederatedModule } from './modules/federated/federated.module';
+import { ContextModule } from './modules/context/context.module';
+import { ContextService } from './modules/context/context.service';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -64,8 +66,17 @@ import { FederatedModule } from './modules/federated/federated.module';
     UserModule,
     RoleModule,
     UserRoleModule,
+    LoggerModule.forRoot({
+      context: 'AppModule',
+    }),
     AuthModule,
-    LoggerModule,
+    // LoggerModule.registerAsync({
+    //   imports: [ContextModule],
+    //   inject: [ContextService],
+    //   useFactory: async (contextService: ContextService) => {
+    //     return await contextService.defaultContext();
+    //   },
+    // }),
     UploadModule,
     EmailModule.registerAsync({
       imports: [HandlebarEmailModule],

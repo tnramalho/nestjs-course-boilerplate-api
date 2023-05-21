@@ -4,6 +4,7 @@ import {
   ConfigType,
 } from '@nestjs/config';
 import sampleConfig from './config/sample.config';
+import { LoggerService } from './modules/logger/logger.service';
 
 // interface DatabaseConfig {
 //   host: string;
@@ -15,7 +16,8 @@ export class AppService {
   constructor(
     //  private configService: configService@Inject(sampleConfig.KEY)
     @Inject(sampleConfig.KEY)
-    private dbConfig: ConfigType<typeof sampleConfig>
+    private dbConfig: ConfigType<typeof sampleConfig>,
+    private readonly loggerService: LoggerService
   ) {}
 
   getSampleConfig(): string {
@@ -25,6 +27,11 @@ export class AppService {
     Port: ${port}
     Database Host: ${host}
     `;
+  }
+
+  log(): string {
+    this.loggerService.log('AppService.log()');
+    return this.loggerService.getContext();
   }
 
   // getSampleConfig(): string {

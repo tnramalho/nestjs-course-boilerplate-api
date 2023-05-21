@@ -26,10 +26,14 @@ import { AuthResponseDto } from './dto/auth-response.dto';
 import { AuthUpdatePasswordDto } from './dto/auth-update-password.dto';
 import { JwtAuthGuard } from './guards/jwt-auth-guard';
 import { LocalAuthGuard } from './guards/local-auth-guard';
+import { LoggerService } from '../logger/logger.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private loggerService: LoggerService,
+  ) {}
   @ApiBody({
     type: AuthLoginDto,
     description: 'Authenticate user with username and password',
@@ -97,5 +101,11 @@ export class AuthController {
     @Body() authUpdatePasswordDto: AuthUpdatePasswordDto
   ): Promise<void> {
     return this.authService.updatePassword(resetToken, authUpdatePasswordDto);
+  }
+
+  @Get('log')
+  log(): string {
+    this.loggerService.log('AuthController.log()');
+    return this.loggerService.getContext();
   }
 }

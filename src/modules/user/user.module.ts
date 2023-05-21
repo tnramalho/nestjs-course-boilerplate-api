@@ -3,10 +3,15 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { LoggerModule } from '../logger/logger.module';
 import { UserReportController } from './user-report.controller';
+import { LoggerModule } from '../logger/logger.module';
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), LoggerModule],
+  imports: [
+    // LoggerModule.register({
+    //   context: 'UserModule',
+    // }),
+    TypeOrmModule.forFeature([User]),
+  ],
   controllers: [UserController, UserReportController],
   providers: [UserService],
   exports: [UserService],

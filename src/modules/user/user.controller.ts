@@ -27,18 +27,26 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
+import { LoggerService } from '../logger/logger.service';
 
 @ApiTags('Users')
 @Controller('users')
 @ApiBearerAuth()
 //@UseGuards(RolesGuard)
 //@UseGuards(JwtAuthGuard)
-@Roles(RoleEnum.Admin)
+//@Roles(RoleEnum.Admin)
 export class UserController {
   constructor(
     private readonly usersService: UserService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private readonly loggerService: LoggerService
   ) {}
+
+  @Get('log')
+  log(): string {
+    this.loggerService.log('UserController.log()');
+    return this.loggerService.getContext();
+  }
 
   private async updateReportCache() {
     this.cacheManager.set(USER_REPORT_CACHE_KEY, await this.findAll());
@@ -108,4 +116,5 @@ export class UserController {
     await this.usersService.remove(id);
     this.updateReportCache();
   }
+
 }

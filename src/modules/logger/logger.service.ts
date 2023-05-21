@@ -1,8 +1,14 @@
-import { ConsoleLogger, HttpException, Injectable } from '@nestjs/common';
+import {
+  ConsoleLogger,
+  HttpException,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
 import { LoggerTransportService } from './logger-transport.service';
 import { LogLevel } from '@nestjs/common/services/logger.service';
 import { Request, Response } from 'express';
-import { LoggerTransportInterface } from './interfaces';
+import { LoggerConfigInterface, LoggerTransportInterface } from './interfaces';
+import { LOGGER_MODULE_OPTIONS_TOKEN } from './logger.module-definition';
 
 /**
  * A Custom logger Service
@@ -10,8 +16,20 @@ import { LoggerTransportInterface } from './interfaces';
  */
 @Injectable()
 export class LoggerService extends ConsoleLogger {
-  constructor(private transportService: LoggerTransportService) {
+  constructor(
+    private transportService: LoggerTransportService,
+    @Inject(LOGGER_MODULE_OPTIONS_TOKEN)
+    private loggerConfig: LoggerConfigInterface
+  ) {
     super();
+    if (this.loggerConfig?.context) {
+      this.setContext(this.loggerConfig.context);
+    }
+    this.log('LoggerService constructor');
+  }
+
+  getContext(): string {
+    return this.loggerConfig?.context || 'not-defined';
   }
 
   exception(error: Error, message?: string, context?: string | undefined) {
@@ -69,7 +87,7 @@ export class LoggerService extends ConsoleLogger {
   }
 
   log(message: string, context?: string) {
-    super.log(message, context);
+    super.log(message, context || this.getContext());
     this.transportService.log(message, 'log' as LogLevel);
   }
 

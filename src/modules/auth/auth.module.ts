@@ -13,6 +13,7 @@ import { LocalAuthGuard } from './guards/local-auth-guard';
 import { AuthGithubStrategy } from './strategies/github.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local-strategy';
+import { LoggerModule } from '../logger/logger.module';
 
 @Module({
   imports: [
@@ -23,6 +24,9 @@ import { LocalStrategy } from './strategies/local-strategy';
       useFactory: async (config: ConfigType<typeof jwtConfig>) => config,
     }),
     FederatedModule,
+    LoggerModule.register({
+      context: 'AuthModule',
+    }),
   ],
   controllers: [AuthController, AuthGithubController],
   providers: [

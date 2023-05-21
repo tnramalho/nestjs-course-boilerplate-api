@@ -161,4 +161,12 @@ export class AuthService {
     // don't return anything
     return;
   }
+
+  getContext(): string {
+    return this.loggerService.getContext();
+  }
+
+  log() {
+    this.loggerService.log('AuthService.log()');
+  }
 }
